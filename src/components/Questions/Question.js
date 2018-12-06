@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 // import { connect } from "react-redux";
 
-export class Question extends Component {
+class Question extends Component {
   constructor() {
     super();
     this.state = {
@@ -27,29 +27,59 @@ export class Question extends Component {
         responseText: "true",
         submissionIdentifier: "submissionIdentifier"
       },
+      responseText: "",
       errors: {}
     };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
-  static propTypes = {
-    prop: PropTypes
-  };
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    const newResponse = {
+      id: this.state.response.id,
+      applicationIdentifier: this.state.response.applicationIdentifier,
+      questionSequence: this.state.response.questionSequence,
+      usFormNumber: this.state.response.usFormNumber,
+      responseText: this.state.responseText,
+      submissionIdentifier: this.state.response.submissionIdentifier,
+      xPlacement: this.state.question.xPlacement,
+      yPlacement: this.state.question.yPlacement,
+      pageOnForm: this.state.question.pageOnForm,
+      partOfForm: this.state.question.partOfForm,
+      questionNumber: this.state.question.questionNumber,
+      questionNumberPart: this.state.question.questionNumberPart
+    };
+    console.log(newResponse);
+    // this.props.createResponse(newResponse, this.props.history);
+  }
+  // static propTypes = {
+  //   prop: PropTypes
+  // };
 
   render() {
+    const responseText = this.state.responseText;
     return (
       <div className="project">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h5 className="display-4 text-center">Question Text</h5>
+              <h5 className="display-4 text-center">
+                {this.state.question.questionText}
+              </h5>
               <hr />
-              <form>
+              <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
                     type="text"
                     className="form-control form-control-lg "
-                    placeholder="Project Name"
+                    placeholder="Your response"
                     name="responseText"
-                    value={this.state.response.responseText}
+                    value={responseText}
+                    onChange={this.onChange}
                   />
                 </div>
 
@@ -65,10 +95,11 @@ export class Question extends Component {
     );
   }
 }
+// get user and send with response
 
-const mapStateToProps = state => ({});
+// const mapStateToProps = state => ({});
 
-const mapDispatchToProps = {};
+// const mapDispatchToProps = {};
 
 // export default connect(
 //   mapStateToProps,
