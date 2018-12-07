@@ -7,16 +7,34 @@ const middleware = [thunk];
 
 let store;
 
-const ReactReduxDevTools =
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+// const ReactReduxDevTools =
+//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
-if (window.navigator.userAgent.includes("Chrome") && ReactReduxDevTools) {
+// if (window.navigator.userAgent.includes("Chrome") && ReactReduxDevTools) {
+//   store = createStore(
+//     rootReducer,
+//     initialState,
+//     compose(
+//       applyMiddleware(...middleware),
+//       ReactReduxDevTools
+//     )
+//   );
+// } else {
+//   store = createStore(
+//     rootReducer,
+//     initialState,
+//     compose(applyMiddleware(...middleware))
+//   );
+// }
+
+if (window.navigator.userAgent.includes("Chrome")) {
   store = createStore(
     rootReducer,
     initialState,
     compose(
       applyMiddleware(...middleware),
-      ReactReduxDevTools
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__()
     )
   );
 } else {
