@@ -1,18 +1,21 @@
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
-// import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createResponse } from "./../../actions/responseActions";
 
 class Question extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log(props);
     this.state = {
       question: {
         id: 1,
-        questionText: "USCIS Online Account Number (if any)",
+        questionText: "Alien Registration Number (A-Number)",
+        spanishText: "Número de Registración - Alíen (Número A)",
         questionInfo: "information about you",
-        xPlacement: 2,
-        yPlacement: 3,
-        pageOnForm: 1,
+        xPlacement: 165,
+        yPlacement: 485,
+        pageOnForm: 0,
         partOfForm: "1",
         questionNumber: "1",
         questionNumberPart: "1",
@@ -20,14 +23,14 @@ class Question extends Component {
         usFormNumber: "I-90"
       },
       response: {
-        id: "",
         applicationIdentifier: "20-I-90",
         questionSequence: "I-90-1-1",
         usFormNumber: "I-90",
-        responseText: "true",
+        responseText: "",
         submissionIdentifier: "submissionIdentifier"
       },
       responseText: "",
+      user: {},
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -39,8 +42,10 @@ class Question extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    const userId = this.state.user.id;
+    const usFormNumber = this.state.response.usFormNumber;
     const newResponse = {
-      id: this.state.response.id,
+      // id: this.state.response.id,
       applicationIdentifier: this.state.response.applicationIdentifier,
       questionSequence: this.state.response.questionSequence,
       usFormNumber: this.state.response.usFormNumber,
@@ -54,11 +59,21 @@ class Question extends Component {
       questionNumberPart: this.state.question.questionNumberPart
     };
     console.log(newResponse);
-    // this.props.createResponse(newResponse, this.props.history);
+    this.props.createResponse(
+      newResponse,
+      userId,
+      usFormNumber,
+      this.props.history
+    );
   }
-  // static propTypes = {
-  //   prop: PropTypes
-  // };
+  static propTypes = {
+    createResponse: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    question: PropTypes.object.isRequired,
+    response: PropTypes.object.isRequired,
+    responseText: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired
+  };
 
   render() {
     const responseText = this.state.responseText;
@@ -68,7 +83,7 @@ class Question extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h5 className="display-4 text-center">
-                {this.state.question.questionText}
+                {this.state.question.spanishText}
               </h5>
               <hr />
               <form onSubmit={this.onSubmit}>
@@ -76,7 +91,7 @@ class Question extends Component {
                   <input
                     type="text"
                     className="form-control form-control-lg "
-                    placeholder="Your response"
+                    placeholder="Tu respuesta"
                     name="responseText"
                     value={responseText}
                     onChange={this.onChange}
@@ -97,13 +112,15 @@ class Question extends Component {
 }
 // get user and send with response
 
-// const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  errors: state.errors
+});
 
-// const mapDispatchToProps = {};
+// const mapDispatchToProps = {
+//   createResponse: props.createResponse
+// };
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Question);
-
-export default Question;
+export default connect(
+  mapStateToProps,
+  { createResponse }
+)(Question);
