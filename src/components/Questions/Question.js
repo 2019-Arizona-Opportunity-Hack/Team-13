@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { createResponse } from "./../../actions/responseActions";
 
 class Question extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
+  constructor() {
+    super();
+    console.log();
     this.state = {
       question: {
         id: 1,
@@ -46,34 +46,38 @@ class Question extends Component {
     const usFormNumber = this.state.response.usFormNumber;
     const newResponse = {
       // id: this.state.response.id,
-      applicationIdentifier: this.state.response.applicationIdentifier,
-      questionSequence: this.state.response.questionSequence,
-      usFormNumber: this.state.response.usFormNumber,
-      responseText: this.state.responseText,
-      submissionIdentifier: this.state.response.submissionIdentifier,
-      xPlacement: this.state.question.xPlacement,
-      yPlacement: this.state.question.yPlacement,
-      pageOnForm: this.state.question.pageOnForm,
-      partOfForm: this.state.question.partOfForm,
-      questionNumber: this.state.question.questionNumber,
-      questionNumberPart: this.state.question.questionNumberPart
+      // applicationIdentifier: this.state.response.applicationIdentifier,
+      // questionSequence: this.state.response.questionSequence,
+      // usFormNumber: this.state.response.usFormNumber,
+      // responseText: this.state.responseText,
+      // submissionIdentifier: this.state.response.submissionIdentifier,
+      // xPlacement: this.state.question.xPlacement,
+      // yPlacement: this.state.question.yPlacement,
+      // pageOnForm: this.state.question.pageOnForm,
+      // partOfForm: this.state.question.partOfForm,
+      // questionNumber: this.state.question.questionNumber,
+      // questionNumberPart: this.state.question.questionNumberPart
+      // project below
+      // projectName: "test",
+      // projectIdentifier: "IDTE",
+      // description: "describe the new project"
     };
     console.log(newResponse);
     this.props.createResponse(
       newResponse,
-      userId,
-      usFormNumber,
+      // userId,
+      // usFormNumber,
       this.props.history
     );
   }
-  static propTypes = {
-    createResponse: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired,
-    question: PropTypes.object.isRequired,
-    response: PropTypes.object.isRequired,
-    responseText: PropTypes.string.isRequired,
-    user: PropTypes.object.isRequired
-  };
+  // static propTypes = {
+  //   createResponse: PropTypes.func.isRequired,
+  //   errors: PropTypes.object.isRequired,
+  //   question: PropTypes.object.isRequired,
+  //   response: PropTypes.object.isRequired,
+  //   responseText: PropTypes.string.isRequired,
+  //   user: PropTypes.object.isRequired
+  // };
 
   render() {
     const responseText = this.state.responseText;
@@ -111,6 +115,14 @@ class Question extends Component {
   }
 }
 // get user and send with response
+Question.propTypes = {
+  createResponse: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+  // question: PropTypes.object.isRequired,
+  // response: PropTypes.object.isRequired,
+  // responseText: PropTypes.string.isRequired,
+  // user: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
   errors: state.errors
