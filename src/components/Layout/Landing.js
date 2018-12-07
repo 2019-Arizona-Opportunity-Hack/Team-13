@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 
 class Landing extends Component {
   componentDidMount() {
-    // if (this.props.security.validToken) {
-    //   this.props.history.push("/dashboard");
-    // }
+    if (this.props.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   render() {

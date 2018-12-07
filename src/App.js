@@ -6,10 +6,32 @@ import Landing from "./components/Layout/Landing";
 import Login from "./components/UserManagement/Login";
 import Register from "./components/UserManagement/Register";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Question from "./components/Questions/Question";
 import { Provider } from "react-redux";
 import store from "./store";
+import jwt_decode from "jwt-decode";
+import setJWTToken from "./secureUtils/setJWTToken";
+import { SET_CURRENT_USER } from "./actions/types";
+import { logout } from "./actions/securityActions";
+import SecureRoute from "./secureUtils/SecuredRoute";
+
+const jwtToken = localStorage.jwtToken;
+
+if (jwtToken) {
+  setJWTToken(jwtToken);
+  const decoded_jwtToken = jwt_decode(jwtToken);
+  store.dispatch({
+    type: SET_CURRENT_USER,
+    payload: decoded_jwtToken
+  });
+
+  const currentTime = Date.now() / 1000;
+  if (decoded_jwtToken.exp < currentTime) {
+    store.dispatch(logout());
+    window.location.href = "/";
+  }
+}
 
 class App extends Component {
   render() {
@@ -18,17 +40,13 @@ class App extends Component {
         <Router>
           <div className="App">
             <Header />
-            {
-              // public
-            }
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            {
-              // private
-            }
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/question" component={Question} />
+            <Switch>
+              <SecureRoute exact path="/dashboard" component={Dashboard} />
+              <SecureRoute exact path="/question" component={Question} />
+            </Switch>
           </div>
         </Router>
       </Provider>
