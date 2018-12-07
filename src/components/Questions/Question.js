@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createResponse } from "./../../actions/responseActions";
+import classnames from "classnames";
 
 class Question extends Component {
   constructor() {
@@ -36,6 +37,13 @@ class Question extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -81,6 +89,7 @@ class Question extends Component {
 
   render() {
     const responseText = this.state.responseText;
+    const { errors } = this.state;
     return (
       <div className="project">
         <div className="container">
@@ -94,12 +103,17 @@ class Question extends Component {
                 <div className="form-group">
                   <input
                     type="text"
-                    className="form-control form-control-lg "
+                    className={classnames("form-control form-control-lg ", {
+                      "is-invalid": errors.username
+                    })}
                     placeholder="Tu respuesta"
                     name="responseText"
                     value={responseText}
                     onChange={this.onChange}
                   />
+                  {errors.username && (
+                    <div className="invalid-feedback">{errors.username}</div>
+                  )}
                 </div>
 
                 <input
