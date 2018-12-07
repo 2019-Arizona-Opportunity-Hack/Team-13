@@ -11,7 +11,7 @@ class Header extends Component {
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
         <div className="container">
-          <Link className="navbar-brand" to="Dashboard.html">
+          <Link className="navbar-brand" to="/">
             MBL Tool
           </Link>
           <button
@@ -34,12 +34,12 @@ class Header extends Component {
 
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link " to="register.html">
+                <Link className="nav-link " to="/register">
                   Sign Up
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="login.html">
+                <Link className="nav-link" to="/login">
                   Login
                 </Link>
               </li>
