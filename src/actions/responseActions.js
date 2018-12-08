@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS } from "./types";
+import { GET_ERRORS, GET_RESPONSE } from "./types";
 
 export const createResponse = (
   newResponse,
@@ -17,6 +17,27 @@ export const createResponse = (
   } catch (err) {
     console.log(err);
     console.log(err.response);
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+export const getResponse = (
+  usFormNumber,
+  responseId,
+  userId
+) => async dispatch => {
+  try {
+    const res = await axios.get(
+      `/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses/${responseId}`
+    );
+    dispatch({
+      type: GET_RESPONSE,
+      payload: res.data
+    });
+  } catch (err) {
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data

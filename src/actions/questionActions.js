@@ -18,28 +18,49 @@ export const createQuestion = (
 };
 
 export const getQuestion = questionSequence => async dispatch => {
-  const res = await axios.get(
-    `http://localhost:8080/api/ver0001/question-list/i-90/${questionSequence}`
-  );
-  dispatch({
-    type: GET_QUESTIONS,
-    payload: res.data
-  });
+  try {
+    const res = await axios.get(
+      `http://localhost:8080/api/ver0001/question-list/i-90/${questionSequence}`
+    );
+    dispatch({
+      type: GET_QUESTIONS,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
 };
 
 export const getQuestions = () => async dispatch => {
-  const res = await axios.get(
-    "http://localhost:8080/api/ver0001/question-list/i-90"
-  );
-  dispatch({
-    type: GET_QUESTIONS,
-    payload: res.data
-  });
+  try {
+    const res = await axios.get(
+      "http://localhost:8080/api/ver0001/question-list/i-90"
+    );
+    dispatch({
+      type: GET_QUESTIONS,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
 };
 
 export const loadQuestion = () => dispatch => {
-  dispatch({
-    type: LOAD_QUESTION,
-    payload: {}
-  });
+  try {
+    dispatch({
+      type: LOAD_QUESTION,
+      payload: {}
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
 };

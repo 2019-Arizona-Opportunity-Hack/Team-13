@@ -1,25 +1,55 @@
 import React, { Component } from "react";
 import Question from "./../Questions/Question";
 
-export default class ApplicationBacklog extends Component {
+class ApplicationBacklog extends Component {
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    if (nextProps.question_list) {
+    // console.log(nextProps);
+    if (nextProps.questions_list) {
       console.log(nextProps);
     }
   }
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { questions_list } = this.props;
-    console.log(questions_list);
+    // console.log(questions_list);
     const questions = questions_list.map(question => (
       <Question key={question.id} question={question} />
     ));
+    let unansweredQ = [];
+    let answeredQ = [];
+
+    for (let i = 0; i < questions.length; i++) {
+      //if question[i].questionSequence !== response[i].questionSequence
+      // unansweredQ.push(question[i])
+      // else if response[i].confirmed === false
+      // answeredQ.push(question[i])
+      if (questions[i]) {
+        unansweredQ.push(questions[i]);
+      }
+    }
     return (
-      <div>
-        <h1>Application Backlog</h1>
-        {questions}
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="card text-center mb-2">
+              <div className="card-header bg-secondary text-white">
+                <h3>TO DO</h3>
+              </div>
+            </div>
+            {unansweredQ}
+          </div>
+          <div className="col-md-6">
+            <div className="card text-center mb-2">
+              <div className="card-header bg-success text-white">
+                <h3>Listo</h3>
+              </div>
+            </div>
+            {answeredQ}
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+export default ApplicationBacklog;

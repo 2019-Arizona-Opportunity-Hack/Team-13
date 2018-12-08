@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { createResponse } from "./../../actions/responseActions";
 import { getQuestion } from "./../../actions/questionActions";
 import classnames from "classnames";
+import { Link } from "react-router-dom";
 
 class Question extends Component {
   constructor(props) {
@@ -80,14 +81,6 @@ class Question extends Component {
       this.props.history
     );
   }
-  // static propTypes = {
-  //   createResponse: PropTypes.func.isRequired,
-  //   errors: PropTypes.object.isRequired,
-  //   question: PropTypes.object.isRequired,
-  //   response: PropTypes.object.isRequired,
-  //   responseText: PropTypes.string.isRequired,
-  //   user: PropTypes.object.isRequired
-  // };
 
   render() {
     const responseText = this.state.responseText;
@@ -98,6 +91,10 @@ class Question extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h5 className="display-4 text-center">
+                <Link to={`/question/${this.state.question.questionSequence}`}>
+                  {this.state.question.questionSequence}
+                </Link>
+                <br />
                 {this.state.question.spanishText}
               </h5>
               <hr />
@@ -106,18 +103,19 @@ class Question extends Component {
                   <input
                     type="text"
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.username
+                      "is-invalid": errors.responseText
                     })}
                     placeholder="Tu respuesta"
                     name="responseText"
                     value={responseText}
                     onChange={this.onChange}
                   />
-                  {errors.username && (
-                    <div className="invalid-feedback">{errors.username}</div>
+                  {errors.responseText && (
+                    <div className="invalid-feedback">
+                      {errors.responseText}
+                    </div>
                   )}
                 </div>
-
                 <input
                   type="submit"
                   className="btn btn-primary btn-block mt-4"
