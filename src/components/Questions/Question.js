@@ -2,36 +2,41 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createResponse } from "./../../actions/responseActions";
+import { getQuestion } from "./../../actions/questionActions";
 import classnames from "classnames";
 
 class Question extends Component {
-  constructor() {
-    super();
-    console.log();
+  constructor(props) {
+    super(props);
+    console.log(props);
+    const { question } = props;
+    const { user } = props.security;
+    // console.log(question);
     this.state = {
       question: {
-        id: 1,
-        questionText: "Alien Registration Number (A-Number)",
-        spanishText: "Número de Registración - Alíen (Número A)",
-        questionInfo: "information about you",
-        xPlacement: 165,
-        yPlacement: 485,
-        pageOnForm: 0,
-        partOfForm: "1",
-        questionNumber: "1",
-        questionNumberPart: "1",
-        questionSequence: "I-90-1-1",
-        usFormNumber: "I-90"
+        id: question.id,
+        questionText: question.questionText,
+        spanishText: question.spanishText,
+        questionInfo: question.questionInfo,
+        xPlacement: question.xPlacement,
+        yPlacement: question.yPlacement,
+        pageOnForm: question.pageOnForm,
+        partOfForm: question.partOfForm,
+        questionNumber: question.questionNumber,
+        questionNumberPart: question.questionNumberPart,
+        questionSequence: question.questionSequence,
+        usFormNumber: question.usFormNumber
       },
       response: {
         applicationIdentifier: "20-I-90",
-        questionSequence: "I-90-1-1",
-        usFormNumber: "I-90",
+        questionSequence: question.questionSequence,
+        usFormNumber: question.usFormNumber,
+        spanishText: question.spanishText,
         responseText: "",
         submissionIdentifier: "submissionIdentifier"
       },
       responseText: "",
-      user: {},
+      user,
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -57,6 +62,7 @@ class Question extends Component {
       applicationIdentifier: this.state.response.applicationIdentifier,
       questionSequence: this.state.response.questionSequence,
       usFormNumber: this.state.response.usFormNumber,
+      spanishText: this.state.spanishText,
       responseText: this.state.responseText,
       submissionIdentifier: this.state.response.submissionIdentifier,
       xPlacement: this.state.question.xPlacement,
@@ -127,20 +133,21 @@ class Question extends Component {
 // get user and send with response
 Question.propTypes = {
   createResponse: PropTypes.func.isRequired,
+  getQuestion: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  questions: PropTypes.object.isRequired
+  question: PropTypes.object.isRequired,
   // response: PropTypes.object.isRequired,
   // responseText: PropTypes.string.isRequired,
-  // user: PropTypes.object.isRequired
+  security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  questions: state.question
-  // security: state.security
+  questions: state.question,
+  security: state.security
 });
 
 export default connect(
   mapStateToProps,
-  { createResponse }
+  { createResponse, getQuestion }
 )(Question);
