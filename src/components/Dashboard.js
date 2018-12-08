@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Application from "./Applications/Application";
 import CreateApplicationButton from "./CreateApplicationButton";
+import { connect } from "react-redux";
+import { getQuestions } from "./../actions/questionActions";
 
 class Dashboard extends Component {
-  static propTypes = {
-    prop: PropTypes
-  };
+  componentDidMount() {
+    this.props.getQuestions();
+  }
 
   render() {
     return (
@@ -28,4 +30,17 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  // project: PropTypes.object.isRequired,
+  getQuestions: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  // projects: state.projects,
+  questions: state.questions
+});
+
+export default connect(
+  mapStateToProps,
+  { getQuestions }
+)(Dashboard);

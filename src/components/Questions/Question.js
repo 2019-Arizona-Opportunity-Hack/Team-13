@@ -54,27 +54,23 @@ class Question extends Component {
     const usFormNumber = this.state.response.usFormNumber;
     const newResponse = {
       // id: this.state.response.id,
-      // applicationIdentifier: this.state.response.applicationIdentifier,
-      // questionSequence: this.state.response.questionSequence,
-      // usFormNumber: this.state.response.usFormNumber,
-      // responseText: this.state.responseText,
-      // submissionIdentifier: this.state.response.submissionIdentifier,
-      // xPlacement: this.state.question.xPlacement,
-      // yPlacement: this.state.question.yPlacement,
-      // pageOnForm: this.state.question.pageOnForm,
-      // partOfForm: this.state.question.partOfForm,
-      // questionNumber: this.state.question.questionNumber,
-      // questionNumberPart: this.state.question.questionNumberPart
-      // project below
-      // projectName: "test",
-      // projectIdentifier: "IDTE",
-      // description: "describe the new project"
+      applicationIdentifier: this.state.response.applicationIdentifier,
+      questionSequence: this.state.response.questionSequence,
+      usFormNumber: this.state.response.usFormNumber,
+      responseText: this.state.responseText,
+      submissionIdentifier: this.state.response.submissionIdentifier,
+      xPlacement: this.state.question.xPlacement,
+      yPlacement: this.state.question.yPlacement,
+      pageOnForm: this.state.question.pageOnForm,
+      partOfForm: this.state.question.partOfForm,
+      questionNumber: this.state.question.questionNumber,
+      questionNumberPart: this.state.question.questionNumberPart
     };
     console.log(newResponse);
     this.props.createResponse(
       newResponse,
-      // userId,
-      // usFormNumber,
+      userId,
+      usFormNumber,
       this.props.history
     );
   }
@@ -131,20 +127,18 @@ class Question extends Component {
 // get user and send with response
 Question.propTypes = {
   createResponse: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
-  // question: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  questions: PropTypes.object.isRequired
   // response: PropTypes.object.isRequired,
   // responseText: PropTypes.string.isRequired,
   // user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  errors: state.errors
+  errors: state.errors,
+  questions: state.question
+  // security: state.security
 });
-
-// const mapDispatchToProps = {
-//   createResponse: props.createResponse
-// };
 
 export default connect(
   mapStateToProps,
