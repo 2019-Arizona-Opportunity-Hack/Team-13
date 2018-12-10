@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_ERRORS, GET_RESPONSE } from "./types";
+import {
+  GET_ERRORS,
+  GET_RESPONSE,
+  GET_RESPONSES,
+  GET_QUESTIONS
+} from "./types";
 
 export const createResponse = (
   newResponse,
@@ -51,11 +56,15 @@ export const getResponses = (
   history
 ) => async dispatch => {
   try {
-    const res = await axios.post(
-      `http://localhost:8080/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses/`
+    const res = await axios.get(
+      `http://localhost:8080/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses`
     );
     history.push("/dashboard");
     console.log(res);
+    dispatch({
+      type: GET_RESPONSES,
+      payload: res.data
+    });
   } catch (err) {
     console.log(err);
     console.log(err.response);

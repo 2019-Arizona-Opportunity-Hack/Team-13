@@ -4,10 +4,17 @@ import Application from "./Applications/Application";
 import CreateApplicationButton from "./CreateApplicationButton";
 import { connect } from "react-redux";
 import { getQuestions } from "./../actions/questionActions";
+import { getResponses } from "./../actions/responseActions";
 
 class Dashboard extends Component {
   componentDidMount() {
+    console.log(this.props);
     this.props.getQuestions();
+    this.props.getResponses(
+      this.props.security.user.id,
+      "I-90",
+      this.props.history
+    );
   }
 
   render() {
@@ -32,15 +39,17 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   // project: PropTypes.object.isRequired,
-  getQuestions: PropTypes.func.isRequired
+  getQuestions: PropTypes.func.isRequired,
+  security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   // projects: state.projects,
-  questions: state.questions
+  // questions: state.questions
+  security: state.security
 });
 
 export default connect(
   mapStateToProps,
-  { getQuestions }
+  { getQuestions, getResponses }
 )(Dashboard);

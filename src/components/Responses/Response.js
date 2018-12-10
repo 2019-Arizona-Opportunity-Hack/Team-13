@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createResponse } from "./../../actions/responseActions";
-import { getResponse } from "./../../actions/responseActions";
+import { createResponse, getResponse } from "./../../actions/questionActions";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 
@@ -43,8 +42,13 @@ class Response extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+  getResponse() {
+    let responseId = this.props.match.params.questionSequence;
+    this.props.getResponse(responseId);
+  }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -91,8 +95,11 @@ class Response extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h5 className="display-4 text-center">
-                <Link to={`/question/${this.state.response.questionSequence}`}>
-                  {this.state.response.questionSequence}
+                <Link
+                  to={`/question/${this.state.response.id}`}
+                  onClick={this.getResponse.bind(this)}
+                >
+                  {this.state.response.id}
                 </Link>
                 <br />
                 {this.state.response.spanishText}
@@ -143,6 +150,7 @@ Response.propTypes = {
 const mapStateToProps = state => ({
   errors: state.errors,
   responses: state.response,
+  response: state.response,
   security: state.security
 });
 

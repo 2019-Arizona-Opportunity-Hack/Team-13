@@ -134,8 +134,6 @@ Question.propTypes = {
   getQuestion: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   question: PropTypes.object.isRequired,
-  // response: PropTypes.object.isRequired,
-  // responseText: PropTypes.string.isRequired,
   security: PropTypes.object.isRequired
 };
 

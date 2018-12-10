@@ -3,11 +3,15 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ApplicationBacklog from "./ApplicationBacklog";
 import { getQuestions } from "./../../actions/questionActions";
+import { getResponses } from "./../../actions/responseActions";
+import { filterQuestions } from "./../../actions/filterQuestions";
 
 class ApplicationStatus extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      questions: [],
+      responses: [],
       errors: {}
     };
   }
@@ -17,14 +21,17 @@ class ApplicationStatus extends Component {
     }
   }
   componentDidMount() {
+    // console.log(this.props);
     this.props.getQuestions();
+    this.props.getResponses();
+    this.props.filterQuestions();
   }
   render() {
     const { questions } = this.props;
     const { errors } = this.state;
-    console.log(questions);
+    console.log(errors);
     const questionAlgorithm = (errors, questions) => {
-      console.log(questions);
+      // console.log(questions);
       if (questions.length < 1) {
         return (
           <div>
@@ -42,12 +49,7 @@ class ApplicationStatus extends Component {
       }
     };
     let ApplicationContent = questionAlgorithm(errors, questions);
-    return (
-      <div>
-        <h1>Application Status!</h1>
-        {ApplicationContent}
-      </div>
-    );
+    return <div>{ApplicationContent}</div>;
   }
 }
 
@@ -57,10 +59,12 @@ ApplicationStatus.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  filteredQuestions: state.filteredQuestions,
   questions: state.questions.questions,
+  responses: state.responses.responses,
   errors: state.errors
 });
 export default connect(
   mapStateToProps,
-  { getQuestions }
+  { getQuestions, getResponses }
 )(ApplicationStatus);

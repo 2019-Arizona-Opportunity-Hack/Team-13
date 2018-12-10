@@ -36,7 +36,8 @@ class ApplicationBacklog extends Component {
                 <h3>TO DO</h3>
               </div>
             </div>
-            {unansweredQ}
+            {unansweredQ.length}
+            {unansweredQ.slice(0, 5)}
           </div>
           <div className="col-md-6">
             <div className="card text-center mb-2">
@@ -44,7 +45,7 @@ class ApplicationBacklog extends Component {
                 <h3>Listo</h3>
               </div>
             </div>
-            {answeredQ}
+            {answeredQ.length}
           </div>
         </div>
       </div>

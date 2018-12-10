@@ -12,5 +12,8 @@ export const LOAD_QUESTION = "LOAD_QUESTION";
 export const GET_RESPONSE = "GET_RESPONSE";
 export const GET_RESPONSES = "GET_RESPONSES";
 
+// work
+export const FILTER_QUESTIONS = "FILTER_QUESTIONS";
+
 // auth
 export const SET_CURRENT_USER = "SET_CURRENT_USER";

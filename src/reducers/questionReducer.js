@@ -1,8 +1,18 @@
-import { GET_QUESTION, GET_QUESTIONS, LOAD_QUESTION } from "./../actions/types";
+import {
+  FILTER_QUESTIONS,
+  GET_QUESTION,
+  GET_QUESTIONS,
+  LOAD_QUESTION,
+  GET_RESPONSE,
+  GET_RESPONSES
+} from "./../actions/types";
 
 const initialState = {
+  filteredQuestions: [],
   questions: [],
-  question: {}
+  question: {},
+  responses: [],
+  response: {}
 };
 
 export default function(state = initialState, action) {
@@ -21,6 +31,22 @@ export default function(state = initialState, action) {
       return {
         ...state,
         question: state.questions[0]
+      };
+    case FILTER_QUESTIONS:
+      console.log(action.payload);
+      return {
+        ...state,
+        filteredQuestions: action.payload
+      };
+    case GET_RESPONSES:
+      return {
+        ...state,
+        responses: action.payload
+      };
+    case GET_RESPONSE:
+      return {
+        ...state,
+        response: action.payload
       };
 
     default:

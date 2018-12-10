@@ -53,11 +53,7 @@ class App extends Component {
               />
               <SecureRoute exact path="/dashboard" component={Dashboard} />
               <SecureRoute exact path="/question" component={Question} />
-              <SecureRoute
-                exact
-                path="/question/:questionSequence"
-                component={Response}
-              />
+              <SecureRoute exact path="/question/:id" component={Response} />
             </Switch>
           </div>
         </Router>
