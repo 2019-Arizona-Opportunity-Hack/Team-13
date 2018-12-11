@@ -3,6 +3,7 @@ import {
   GET_QUESTION,
   GET_QUESTIONS,
   LOAD_QUESTION,
+  NEXT_QUESTION,
   GET_RESPONSE,
   GET_RESPONSES
 } from "./../actions/types";
@@ -20,7 +21,8 @@ export default function(state = initialState, action) {
     case GET_QUESTIONS:
       return {
         ...state,
-        questions: action.payload
+        questions: action.payload,
+        question: action.payload[0]
       };
     case GET_QUESTION:
       return {
@@ -32,11 +34,18 @@ export default function(state = initialState, action) {
         ...state,
         question: state.questions[0]
       };
+    case NEXT_QUESTION:
+      return {
+        ...state,
+        question: state.filteredQuestions[0]
+      };
     case FILTER_QUESTIONS:
+      console.log(state);
       console.log(action.payload);
       return {
         ...state,
-        filteredQuestions: action.payload
+        filteredQuestions: action.payload,
+        question: action.payload[0]
       };
     case GET_RESPONSES:
       return {

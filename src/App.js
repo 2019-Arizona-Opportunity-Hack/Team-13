@@ -7,8 +7,8 @@ import Login from "./components/UserManagement/Login";
 import Register from "./components/UserManagement/Register";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Question from "./components/Questions/Question";
-import Response from "./components/Responses/Response";
+import QuestionResponse from "./components/Questions/QuestionResponse";
+// import Response from "./components/Responses/Response";
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
@@ -52,8 +52,11 @@ class App extends Component {
                 component={ApplicationStatus}
               />
               <SecureRoute exact path="/dashboard" component={Dashboard} />
-              <SecureRoute exact path="/question" component={Question} />
-              <SecureRoute exact path="/question/:id" component={Response} />
+              <SecureRoute
+                exact
+                path="/question/:questionSequence"
+                component={QuestionResponse}
+              />
             </Switch>
           </div>
         </Router>

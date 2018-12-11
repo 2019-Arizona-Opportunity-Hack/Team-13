@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 class Application extends Component {
   static propTypes = {
-    prop: PropTypes
+    // prop: PropTypes
   };
 
   render() {

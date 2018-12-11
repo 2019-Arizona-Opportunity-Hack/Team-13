@@ -5,6 +5,7 @@ export const GET_ERRORS = "GET_ERRORS";
 // these will pull questions from the server
 export const GET_QUESTION = "GET_QUESTION";
 export const GET_QUESTIONS = "GET_QUESTIONS";
+export const NEXT_QUESTION = "NEXT_QUESTION";
 // this will load the next unordered question by questionSequence
 export const LOAD_QUESTION = "LOAD_QUESTION";
 

@@ -7,8 +7,13 @@ import { getQuestions } from "./../actions/questionActions";
 import { getResponses } from "./../actions/responseActions";
 
 class Dashboard extends Component {
+  componentWillReceiveProps(nextProps) {
+    // console.log(nextProps);
+    if (nextProps) {
+    }
+  }
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     this.props.getQuestions();
     this.props.getResponses(
       this.props.security.user.id,
@@ -38,14 +43,14 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  // project: PropTypes.object.isRequired,
   getQuestions: PropTypes.func.isRequired,
   security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   // projects: state.projects,
-  // questions: state.questions
+  questions: state.questions,
+  responses: state.responses,
   security: state.security
 });
 

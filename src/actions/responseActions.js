@@ -52,15 +52,15 @@ export const getResponse = (
 
 export const getResponses = (
   userId,
-  usFormNumber,
-  history
+  usFormNumber
+  // history
 ) => async dispatch => {
   try {
     const res = await axios.get(
       `http://localhost:8080/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses`
     );
-    history.push("/dashboard");
-    console.log(res);
+    // history.push("/dashboard");
+    // console.log(res);
     dispatch({
       type: GET_RESPONSES,
       payload: res.data
