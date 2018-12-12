@@ -17,7 +17,6 @@ export const createResponse = (
       `http://localhost:8080/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses/`,
       newResponse
     );
-    history.push("/dashboard");
     console.log(res);
   } catch (err) {
     console.log(err);
@@ -50,16 +49,11 @@ export const getResponse = (
   }
 };
 
-export const getResponses = (
-  userId,
-  usFormNumber
-  // history
-) => async dispatch => {
+export const getResponses = (userId, usFormNumber) => async dispatch => {
   try {
     const res = await axios.get(
       `http://localhost:8080/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses`
     );
-    // history.push("/dashboard");
     // console.log(res);
     dispatch({
       type: GET_RESPONSES,

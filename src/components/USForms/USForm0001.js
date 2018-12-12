@@ -21,19 +21,13 @@ class USForm extends Component {
   render() {
     console.log(this.props);
     console.log(this.state);
-    if (this.props.question !== undefined) {
-      return (
-        <div>
-          <h1>USForm DEFINED</h1>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <h1>Loading Next Question</h1>
-        </div>
-      );
-    }
+    return (
+      <div>
+        <Suspense fallback={<div>Loading</div>}>
+          <QuestionResponse />
+        </Suspense>
+      </div>
+    );
   }
 }
 

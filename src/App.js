@@ -17,6 +17,8 @@ import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
 import SecureRoute from "./secureUtils/SecuredRoute";
 import ApplicationStatus from "./components/Applications/ApplicationStatus";
+import USForm from "./components/USForms/USForm";
+// import USForm0001 from "./components/USForms/USForm0001";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -54,7 +56,7 @@ class App extends Component {
               <SecureRoute exact path="/dashboard" component={Dashboard} />
               <SecureRoute
                 exact
-                path="/question/:questionSequence"
+                path="/question/questionSequence"
                 component={QuestionResponse}
               />
             </Switch>

@@ -44,8 +44,10 @@ export default function(state = initialState, action) {
       console.log(action.payload);
       return {
         ...state,
-        filteredQuestions: action.payload,
-        question: action.payload[0]
+        filteredQuestions: action.payload.filteredQuestions,
+        question: action.payload.filteredQuestions[0],
+        questions: action.payload.questions,
+        responses: action.payload.responses
       };
     case GET_RESPONSES:
       return {

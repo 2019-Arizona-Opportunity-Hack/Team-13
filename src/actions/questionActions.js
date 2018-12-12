@@ -8,7 +8,7 @@ export const createQuestion = (
 ) => async dispatch => {
   try {
     const res = await axios.post(`/question-list/${usFormNumber}`, question);
-    history.push("/dashboard");
+    // history.push("/dashboard");
   } catch (err) {
     dispatch({
       type: GET_ERRORS,

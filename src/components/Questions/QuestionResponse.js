@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { getQuestions } from "./../../actions/questionActions";
-import { filterQuestions } from "./../../actions/filterQuestions";
+import { filterQuestions } from "./../../actions/filterActions";
 import { getResponses } from "./../../actions/responseActions";
 import { createResponse } from "./../../actions/responseActions";
 import classnames from "classnames";
@@ -11,24 +11,11 @@ export class QuestionResponse extends Component {
   constructor(props) {
     super(props);
     console.log(props);
-    let { filteredQuestions, question, questions, responses, security } = props;
+    let { filteredQuestions, question, security } = props;
     this.state = {
       errors: {},
       filteredQuestions,
-      question: {
-        id: question.id,
-        questionText: question.questionText,
-        spanishText: question.spanishText,
-        questionInfo: question.questionInfo,
-        xPlacement: question.xPlacement,
-        yPlacement: question.yPlacement,
-        pageOnForm: question.pageOnForm,
-        partOfForm: question.partOfForm,
-        questionNumber: question.questionNumber,
-        questionNumberPart: question.questionNumberPart,
-        questionSequence: question.questionSequence,
-        usFormNumber: question.usFormNumber
-      },
+      question,
       responseText: "",
       security
     };
@@ -37,42 +24,27 @@ export class QuestionResponse extends Component {
   }
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
-    // let f = this.props.filteredQuestions;
-    // let q = this.props.questions;
-    // let r = this.props.responses;
-    // console.log("f", f);
-    // if (f.length < 1) {
-    //   console.log("asdf");
-    //   this.props.getQuestions();
-    //   this.props.getResponses(
-    //     this.props.security.user.id,
-    //     "I-90"
-    //     // this.props.history
-    //   );
-    // }
-    // this.props.filterQuestions(q, r);
+    let { filteredQuestions, question, security } = nextProps;
+    this.setState({
+      errors: {},
+      filteredQuestions,
+      question,
+      responseText: "",
+      security
+    });
     if (nextProps.errors) {
       console.log(nextProps.errors);
     }
   }
   componentDidMount() {
     console.log(this.props);
-    // console.log(this.props.questions);
-    // console.log(this.props.responses);
-    let f = this.props.filteredQuestions;
-    let q = this.props.questions;
-    let r = this.props.responses;
-    console.log("f", f);
-    if (f.length < 1) {
-      console.log("QuestionResponse componentDidMount");
-      this.props.getQuestions();
-      this.props.getResponses(
-        this.props.security.user.id,
-        "I-90"
-        // this.props.history
-      );
-      this.props.filterQuestions(q, r, this.props.history);
-    }
+    console.log(this.state);
+    this.props.filterQuestions(
+      this.props.security.user.id,
+      "I-90",
+      this.props.history
+    );
+    console.log("earl", this.state);
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -81,10 +53,10 @@ export class QuestionResponse extends Component {
   onSubmit(e) {
     e.preventDefault();
     const userId = this.state.security.user.id;
-    const usFormNumber = this.state.response.usFormNumber;
+    const usFormNumber = this.state.question.usFormNumber;
     const newResponse = {
       // id: this.state.response.id,
-      applicationIdentifier: this.state.response.applicationIdentifier,
+      applicationIdentifier: "1-I-90",
       questionSequence: this.state.question.questionSequence,
       usFormNumber: this.state.question.usFormNumber,
       spanishText: this.state.question.spanishText,
@@ -104,6 +76,8 @@ export class QuestionResponse extends Component {
       usFormNumber,
       this.props.history
     );
+    this.props.filterQuestions(userId, usFormNumber, this.props.history);
+    this.props.history.push("/question/questionSequence");
   }
 
   render() {
@@ -111,6 +85,7 @@ export class QuestionResponse extends Component {
     console.log(this.state);
     let { errors, question, responseText } = this.state;
     console.log(question);
+
     return (
       <div className="project">
         <div className="container">

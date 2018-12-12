@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import ApplicationBacklog from "./ApplicationBacklog";
 import { getQuestions } from "./../../actions/questionActions";
 import { getResponses } from "./../../actions/responseActions";
-import { filterQuestions } from "./../../actions/filterQuestions";
 
 class ApplicationStatus extends Component {
   constructor(props) {
