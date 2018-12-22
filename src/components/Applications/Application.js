@@ -7,6 +7,23 @@ class Application extends Component {
     // prop: PropTypes
   };
 
+  downloadFileWithResponses = () => {
+    fetch("http://localhost:8080/api/ver0001/1/my-form").then(response => {
+      console.log(response);
+      console.log(response.headers);
+      const filename = response.headers
+        .get("Content-Disposition")
+        .split("filename=");
+      response.blob().then(blob => {
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+      });
+    });
+  };
+
   render() {
     return (
       <div className="container">
@@ -21,13 +38,13 @@ class Application extends Component {
             </div>
             <div className="col-md-4 d-none d-lg-block">
               <ul className="list-group">
-                <Link to="/application-status">
+                <button onClick={this.downloadFileWithResponses}>
                   <li className="list-group-item board">
                     <i className="fa fa-flag-checkered pr-1">
-                      Submit Application
+                      Print Application
                     </i>
                   </li>
-                </Link>
+                </button>
                 <Link to="#">
                   <li className="list-group-item update">
                     <i className="fa fa-edit pr-1">View Questions</i>
