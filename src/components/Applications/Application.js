@@ -26,13 +26,8 @@ class Application extends Component {
       console.log(res);
       console.log(res.config);
       console.log(res.status);
-      // console.log(res);
       console.log(res.headers);
       console.log(res.data);
-      // const filename = res.headers
-      //   .get("Content-Disposition")
-      //   .split("filename=");
-      // let url = window.URL.createObjectURL(res.data);
       let a = document.createElement("a");
       a.href = res.data;
       a.download = "myPdf.pdf";
@@ -47,13 +42,8 @@ class Application extends Component {
     let userId = this.props.security.user.id;
     let jwtToken = null;
     if (typeof Storage !== "undefined") {
-      console.log("has storage");
       if (localStorage.hasOwnProperty("jwtToken")) {
-        console.log("has jwtToken");
-        console.log(localStorage);
-        // jwtToken = JSON.parse(localStorage.getItem("jwtToken"));
         jwtToken = localStorage.jwtToken;
-        console.log(jwtToken);
       }
     }
     console.log(userId);
@@ -66,12 +56,9 @@ class Application extends Component {
         Authorization: jwtToken
       }
     }).then(response => {
-      // console.log(response);
-      // console.log(response.headers);
       const filename = response.headers
         .get("Content-Disposition")
         .split("filename=");
-      // console.log(filename);
       response.blob().then(blob => {
         console.log(blob);
         let url = window.URL.createObjectURL(blob);
@@ -129,7 +116,6 @@ const mapStateToProps = state => ({
   security: state.security
 });
 
-// export default Application;
 export default connect(
   mapStateToProps,
   { getMyForms }
