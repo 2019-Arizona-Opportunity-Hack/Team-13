@@ -1,20 +1,79 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { connect } from "react-redux";
+import { getMyForms } from "./../../actions/getMyFormActions";
 
 class Application extends Component {
-  static propTypes = {
-    // prop: PropTypes
-  };
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = {
+      myForm: null
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+  }
+
+  async getMyForms() {
+    try {
+      const res = await axios.get(
+        "http://localhost:8080/api/ver0001/1/my-form"
+      );
+      console.log(res);
+      console.log(res.config);
+      console.log(res.status);
+      // console.log(res);
+      console.log(res.headers);
+      console.log(res.data);
+      // const filename = res.headers
+      //   .get("Content-Disposition")
+      //   .split("filename=");
+      // let url = window.URL.createObjectURL(res.data);
+      let a = document.createElement("a");
+      a.href = res.data;
+      a.download = "myPdf.pdf";
+      a.click();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   downloadFileWithResponses = () => {
-    fetch("http://localhost:8080/api/ver0001/1/my-form").then(response => {
-      console.log(response);
-      console.log(response.headers);
+    // this.getMyForms();
+    let userId = this.props.security.user.id;
+    let jwtToken = null;
+    if (typeof Storage !== "undefined") {
+      console.log("has storage");
+      if (localStorage.hasOwnProperty("jwtToken")) {
+        console.log("has jwtToken");
+        console.log(localStorage);
+        // jwtToken = JSON.parse(localStorage.getItem("jwtToken"));
+        jwtToken = localStorage.jwtToken;
+        console.log(jwtToken);
+      }
+    }
+    console.log(userId);
+    fetch(`http://localhost:8080/api/ver0001/${userId}/my-form`, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: jwtToken
+      }
+    }).then(response => {
+      // console.log(response);
+      // console.log(response.headers);
       const filename = response.headers
         .get("Content-Disposition")
         .split("filename=");
+      // console.log(filename);
       response.blob().then(blob => {
+        console.log(blob);
         let url = window.URL.createObjectURL(blob);
         let a = document.createElement("a");
         a.href = url;
@@ -66,4 +125,12 @@ class Application extends Component {
   }
 }
 
-export default Application;
+const mapStateToProps = state => ({
+  security: state.security
+});
+
+// export default Application;
+export default connect(
+  mapStateToProps,
+  { getMyForms }
+)(Application);

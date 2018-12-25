@@ -27,13 +27,13 @@ export const filterQuestions = (
         filteredQuestions.push(questions[j]);
       }
     }
-    console.log(filteredQuestions);
+    // console.log(filteredQuestions);
     let currentFormStatus = {
       filteredQuestions,
       questions,
       responses
     };
-    console.log(currentFormStatus);
+    // console.log(currentFormStatus);
     dispatch({
       type: FILTER_QUESTIONS,
       payload: currentFormStatus

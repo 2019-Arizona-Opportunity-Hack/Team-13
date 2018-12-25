@@ -40,8 +40,8 @@ export default function(state = initialState, action) {
         question: state.filteredQuestions[0]
       };
     case FILTER_QUESTIONS:
-      console.log(state);
-      console.log(action.payload);
+      // console.log(state);
+      // console.log(action.payload);
       return {
         ...state,
         filteredQuestions: action.payload.filteredQuestions,
