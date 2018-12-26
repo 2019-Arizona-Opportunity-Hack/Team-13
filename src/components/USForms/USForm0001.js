@@ -11,7 +11,7 @@ const QuestionResponse = React.lazy(() =>
 
 class USForm extends Component {
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     this.props.filterQuestions(
       this.props.security.user.id,
       "I-90",
@@ -19,8 +19,8 @@ class USForm extends Component {
     );
   }
   render() {
-    console.log(this.props);
-    console.log(this.state);
+    // console.log(this.props);
+    // console.log(this.state);
     return (
       <div>
         <Suspense fallback={<div>Loading</div>}>

@@ -28,7 +28,7 @@ class ApplicationStatus extends Component {
   render() {
     const { questions } = this.props;
     const { errors } = this.state;
-    console.log(errors);
+    // console.log(errors);
     const questionAlgorithm = (errors, questions) => {
       // console.log(questions);
       if (questions.length < 1) {

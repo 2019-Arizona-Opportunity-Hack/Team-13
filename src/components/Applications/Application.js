@@ -8,14 +8,14 @@ import { getMyForms } from "./../../actions/getMyFormActions";
 class Application extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     this.state = {
       myForm: null
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    // console.log(nextProps);
   }
 
   async getMyForms() {
@@ -23,11 +23,11 @@ class Application extends Component {
       const res = await axios.get(
         "https://mbl-java-api.herokuapp.com/api/ver0001/1/my-form"
       );
-      console.log(res);
-      console.log(res.config);
-      console.log(res.status);
-      console.log(res.headers);
-      console.log(res.data);
+      // console.log(res);
+      // console.log(res.config);
+      // console.log(res.status);
+      // console.log(res.headers);
+      // console.log(res.data);
       let a = document.createElement("a");
       a.href = res.data;
       a.download = "myPdf.pdf";
@@ -46,7 +46,7 @@ class Application extends Component {
         jwtToken = localStorage.jwtToken;
       }
     }
-    console.log(userId);
+    // console.log(userId);
     fetch(`https://mbl-java-api.herokuapp.com/api/ver0001/${userId}/my-form`, {
       method: "GET",
       mode: "cors",
@@ -56,12 +56,12 @@ class Application extends Component {
         Authorization: jwtToken
       }
     }).then(response => {
-      console.log(response);
+      // console.log(response);
       const filename = response.headers
         .get("Content-Disposition")
         .split("filename=");
       response.blob().then(blob => {
-        console.log(blob);
+        // console.log(blob);
         let url = window.URL.createObjectURL(blob);
         let a = document.createElement("a");
         a.href = url;

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 class Response extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     const { question } = props;
     const { user } = props.security;
     // console.log(question);
@@ -48,7 +48,7 @@ class Response extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    // console.log(nextProps);
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -77,7 +77,7 @@ class Response extends Component {
       questionNumber: this.state.question.questionNumber,
       questionNumberPart: this.state.question.questionNumberPart
     };
-    console.log(newResponse);
+    // console.log(newResponse);
     this.props.createResponse(
       newResponse,
       userId,

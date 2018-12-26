@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 class Question extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     const { question } = props;
     const { user } = props.security;
     // console.log(question);
@@ -73,7 +73,7 @@ class Question extends Component {
       questionNumber: this.state.question.questionNumber,
       questionNumberPart: this.state.question.questionNumberPart
     };
-    console.log(newResponse);
+    // console.log(newResponse);
     this.props.createResponse(
       newResponse,
       userId,

@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 export class QuestionResponse extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     let { filteredQuestions, question, security } = props;
     this.state = {
       errors: {},
@@ -23,7 +23,7 @@ export class QuestionResponse extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    // console.log(nextProps);
     let { filteredQuestions, question, security } = nextProps;
     this.setState({
       errors: {},
@@ -33,18 +33,18 @@ export class QuestionResponse extends Component {
       security
     });
     if (nextProps.errors) {
-      console.log(nextProps.errors);
+      // console.log(nextProps.errors);
     }
   }
   componentDidMount() {
-    console.log(this.props);
-    console.log(this.state);
+    // console.log(this.props);
+    // console.log(this.state);
     this.props.filterQuestions(
       this.props.security.user.id,
       "I-90",
       this.props.history
     );
-    console.log("earl", this.state);
+    // console.log("earl", this.state);
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -69,7 +69,7 @@ export class QuestionResponse extends Component {
       questionNumber: this.state.question.questionNumber,
       questionNumberPart: this.state.question.questionNumberPart
     };
-    console.log(newResponse);
+    // console.log(newResponse);
     this.props.createResponse(
       newResponse,
       userId,
@@ -81,10 +81,10 @@ export class QuestionResponse extends Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log(this.state);
+    // console.log(this.props);
+    // console.log(this.state);
     let { errors, question, responseText } = this.state;
-    console.log(question);
+    // console.log(question);
 
     return (
       <div className="project">
