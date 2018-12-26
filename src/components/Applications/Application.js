@@ -56,6 +56,7 @@ class Application extends Component {
         Authorization: jwtToken
       }
     }).then(response => {
+      console.log(response);
       const filename = response.headers
         .get("Content-Disposition")
         .split("filename=");
