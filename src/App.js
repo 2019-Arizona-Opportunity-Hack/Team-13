@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import QuestionResponse from "./components/Questions/QuestionResponse";
 // import Response from "./components/Responses/Response";
 import { Provider } from "react-redux";
+import ReactGA from "react-ga";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setJWTToken from "./secureUtils/setJWTToken";
@@ -36,6 +37,12 @@ if (jwtToken) {
     window.location.href = "/";
   }
 }
+
+ReactGA.initialize("UA-10207332-26", {
+  debug: true
+});
+
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends Component {
   render() {
