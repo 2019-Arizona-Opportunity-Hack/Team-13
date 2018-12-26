@@ -20,7 +20,7 @@ export const createQuestion = (
 export const getQuestion = questionSequence => async dispatch => {
   try {
     const res = await axios.get(
-      `http://localhost:8080/api/ver0001/question-list/i-90/${questionSequence}`
+      `https://mbl-java-api.herokuapp.com/api/ver0001/question-list/i-90/${questionSequence}`
     );
     dispatch({
       type: GET_QUESTIONS,
@@ -37,7 +37,7 @@ export const getQuestion = questionSequence => async dispatch => {
 export const getQuestions = () => async dispatch => {
   try {
     const res = await axios.get(
-      "http://localhost:8080/api/ver0001/question-list/i-90"
+      "https://mbl-java-api.herokuapp.com/api/ver0001/question-list/i-90"
     );
     dispatch({
       type: GET_QUESTIONS,

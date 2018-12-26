@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 export const createNewUser = (newUser, history) => async dispatch => {
   try {
     const res = await axios.post(
-      "http://localhost:8080/api/ver0001/users/register",
+      "https://mbl-java-api.herokuapp.com/api/ver0001/users/register",
       newUser
     );
     history.push("/login");
@@ -28,7 +28,7 @@ export const login = loginRequest => async dispatch => {
   try {
     //  post => Login Request
     const res = await axios.post(
-      "http://localhost:8080/api/ver0001/users/login",
+      "https://mbl-java-api.herokuapp.com/api/ver0001/users/login",
       loginRequest
     );
     // extract token from res.data

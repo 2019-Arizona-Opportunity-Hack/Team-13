@@ -21,7 +21,7 @@ class Application extends Component {
   async getMyForms() {
     try {
       const res = await axios.get(
-        "http://localhost:8080/api/ver0001/1/my-form"
+        "https://mbl-java-api.herokuapp.com/api/ver0001/1/my-form"
       );
       console.log(res);
       console.log(res.config);
@@ -47,7 +47,7 @@ class Application extends Component {
       }
     }
     console.log(userId);
-    fetch(`http://localhost:8080/api/ver0001/${userId}/my-form`, {
+    fetch(`https://mbl-java-api.herokuapp.com/api/ver0001/${userId}/my-form`, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",

@@ -8,10 +8,10 @@ export const filterQuestions = (
 ) => async dispatch => {
   try {
     const resQuestions = await axios.get(
-      `http://localhost:8080/api/ver0001/question-list/${usFormNumber}`
+      `https://mbl-java-api.herokuapp.com/api/ver0001/question-list/${usFormNumber}`
     );
     const resResponses = await axios.get(
-      `http://localhost:8080/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses`
+      `https://mbl-java-api.herokuapp.com/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses`
     );
     // console.log(resQuestions, resResponses);
     let questions = resQuestions.data;
