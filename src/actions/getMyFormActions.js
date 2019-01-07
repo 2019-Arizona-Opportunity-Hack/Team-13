@@ -4,7 +4,8 @@ import { GET_MY_FORM, GET_ERRORS } from "./types";
 export const getMyForms = () => async dispatch => {
   try {
     const res = await axios.get(
-      `https://mbl-java-api.herokuapp.com/api/ver0001/1/my-form`
+      // `https://mbl-java-api.herokuapp.com/api/ver0001/1/my-form`
+      `/1/my-form`
     );
     // console.log(res);
     // console.log(res.config);

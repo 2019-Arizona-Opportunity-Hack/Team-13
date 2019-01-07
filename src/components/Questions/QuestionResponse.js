@@ -23,7 +23,7 @@ export class QuestionResponse extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    // console.log(nextProps);
+    console.log(nextProps);
     let { filteredQuestions, question, security } = nextProps;
     this.setState({
       errors: {},
@@ -76,6 +76,7 @@ export class QuestionResponse extends Component {
       usFormNumber,
       this.props.history
     );
+    this.props.getResponses(this.props.security.user.id, "I-90");
     this.props.filterQuestions(userId, usFormNumber, this.props.history);
     this.props.history.push("/question/questionSequence");
   }
