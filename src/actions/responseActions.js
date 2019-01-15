@@ -14,8 +14,8 @@ export const createResponse = (
 ) => async dispatch => {
   try {
     const res = await axios.post(
-      // `https://mbl-java-api.herokuapp.com/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses/`,
-      `/${userId}/us-form-number/${usFormNumber}/responses/`,
+      `https://mbl-java-api.herokuapp.com/api/ver0001/us-form-number/${usFormNumber}/responses/`,
+      // `/us-form-number/${usFormNumber}/responses/`,
       newResponse
     );
     console.log(res);
@@ -36,7 +36,7 @@ export const getResponse = (
 ) => async dispatch => {
   try {
     const res = await axios.get(
-      `/${userId}/us-form-number/${usFormNumber}/responses/${responseId}`
+      `/us-form-number/${usFormNumber}/responses/${responseId}`
     );
     dispatch({
       type: GET_RESPONSE,
@@ -53,8 +53,8 @@ export const getResponse = (
 export const getResponses = (userId, usFormNumber) => async dispatch => {
   try {
     const res = await axios.get(
-      // `https://mbl-java-api.herokuapp.com/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses`
-      `/${userId}/us-form-number/${usFormNumber}/responses`
+      `https://mbl-java-api.herokuapp.com/api/ver0001/us-form-number/${usFormNumber}/responses`
+      // `/us-form-number/${usFormNumber}/responses`
     );
     // console.log(res);
     dispatch({

@@ -54,6 +54,16 @@ export class QuestionResponse extends Component {
     e.preventDefault();
     const userId = this.state.security.user.id;
     const usFormNumber = this.state.question.usFormNumber;
+    // userId-usFormNumber-questionNumberPart-questionNumber
+    const userFormQuestionResponse =
+      userId +
+      "-" +
+      usFormNumber +
+      "-" +
+      this.state.question.questionNumberPart +
+      "-" +
+      this.state.question.questionNumber;
+    console.log(userFormQuestionResponse);
     const newResponse = {
       // id: this.state.response.id,
       applicationIdentifier: "1-I-90",
@@ -61,6 +71,7 @@ export class QuestionResponse extends Component {
       usFormNumber: this.state.question.usFormNumber,
       spanishText: this.state.question.spanishText,
       responseText: this.state.responseText,
+      userFormQuestionResponse,
       // submissionIdentifier: this.state.response.submissionIdentifier,
       xPlacement: this.state.question.xPlacement,
       yPlacement: this.state.question.yPlacement,
@@ -69,7 +80,7 @@ export class QuestionResponse extends Component {
       questionNumber: this.state.question.questionNumber,
       questionNumberPart: this.state.question.questionNumberPart
     };
-    // console.log(newResponse);
+    console.log(newResponse);
     this.props.createResponse(
       newResponse,
       userId,

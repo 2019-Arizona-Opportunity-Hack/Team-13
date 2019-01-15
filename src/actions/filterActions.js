@@ -8,12 +8,12 @@ export const filterQuestions = (
 ) => async dispatch => {
   try {
     const resQuestions = await axios.get(
-      // `https://mbl-java-api.herokuapp.com/api/ver0001/question-list/${usFormNumber}`
-      `/question-list/${usFormNumber}`
+      `https://mbl-java-api.herokuapp.com/api/ver0001/question-list/${usFormNumber}`
+      // `/question-list/${usFormNumber}`
     );
     const resResponses = await axios.get(
-      // `https://mbl-java-api.herokuapp.com/api/ver0001/${userId}/us-form-number/${usFormNumber}/responses`
-      `/${userId}/us-form-number/${usFormNumber}/responses`
+      `https://mbl-java-api.herokuapp.com/api/ver0001/us-form-number/${usFormNumber}/responses`
+      // `/us-form-number/${usFormNumber}/responses`
     );
     // console.log(resQuestions, resResponses);
     let questions = resQuestions.data;
