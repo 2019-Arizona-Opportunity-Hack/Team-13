@@ -1,7 +1,14 @@
+//Changed "spanishText" to "translationText" to allow translations from other languages
 package com.awews.mbl.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,11 +36,11 @@ public class Question {
 	
 	private String special;
 	
-	private String spanishText;
-	
-	private String questionType;
+	private String translationText;
 	
 	private String responseText;
+
+	private String questionType;
 	
 //	@NotBlank(message = "Question Sequence Part is required")
 	@Column(updatable = false, unique = true)
@@ -50,7 +57,7 @@ public class Question {
 	private String usFormNumber;
 
 	public Question() {
-		
+
 	}
 
 	public Long getId() {
@@ -157,12 +164,12 @@ public class Question {
 		this.special = special;
 	}
 
-	public String getSpanishText() {
-		return spanishText;
+	public String gettranslationText() {
+		return translationText;
 	}
 
-	public void setSpanishText(String spanishText) {
-		this.spanishText = spanishText;
+	public void settranslationText(String translationText) {
+		this.translationText = translationText;
 	}
 
 	public String getQuestionType() {
@@ -186,7 +193,7 @@ public class Question {
 		return "Question [id=" + id + ", questionText=" + questionText + ", questionInfo=" + questionInfo
 				+ ", xPlacement=" + xPlacement + ", yPlacement=" + yPlacement + ", pageOnForm=" + pageOnForm
 				+ ", partOfForm=" + partOfForm + ", questionNumber=" + questionNumber + ", questionNumberPart="
-				+ questionNumberPart + ", special=" + special + ", spanishText=" + spanishText + ", questionType="
+				+ questionNumberPart + ", special=" + special + ", translationText=" + translationText + ", questionType="
 				+ questionType + ", responseText=" + responseText + ", questionSequence=" + questionSequence
 				+ ", questionList=" + questionList + ", usFormNumber=" + usFormNumber + "]";
 	}

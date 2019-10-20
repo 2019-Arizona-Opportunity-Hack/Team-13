@@ -1,8 +1,17 @@
+//Changed "spanishText" to "translationText" to make the code more flexible for other languages
+
 package com.awews.mbl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Response {
@@ -24,7 +33,9 @@ public class Response {
 //	must be unique: userId-usFormNumber-questionNumberPart-questionNumber
 	private String userFormQuestionResponse;
 	
-	private String spanishText;
+	private String translationText;
+
+	private String validationRule; // To help in inputs validation
 	
 //	@Value
 	@Column(columnDefinition = "bool default false")
@@ -128,12 +139,12 @@ public class Response {
 		this.pageOnForm = pageOnForm;
 	}
 
-	public String getSpanishText() {
-		return spanishText;
+	public String gettranslationText() {
+		return translationText;
 	}
 
-	public void setSpanishText(String spanishText) {
-		this.spanishText = spanishText;
+	public void settranslationText(String translationText) {
+		this.translationText = translationText;
 	}
 
 	public Boolean getConfirmed() {
@@ -152,13 +163,27 @@ public class Response {
 		this.userFormQuestionResponse = userFormQuestionResponse;
 	}
 
+	/** 
+	 * Additional methods to help in inputs validation
+	 */
+	public String getValidationRule() {
+		return validationRule;
+	}
+
+	public void setValidationRule(String rule) {
+		validationRule = rule;
+	}
+
+	// End of additional methods
+
 	@Override
 	public String toString() {
 		return "Response [id=" + id + ", user=" + user + ", applicationIdentifier=" + applicationIdentifier
 				+ ", questionSequence=" + questionSequence + ", userFormQuestionResponse=" + userFormQuestionResponse
-				+ ", spanishText=" + spanishText + ", confirmed=" + confirmed + ", usFormNumber=" + usFormNumber
+				+ ", translationText=" + translationText + ", confirmed=" + confirmed + ", usFormNumber=" + usFormNumber
 				+ ", xPlacement=" + xPlacement + ", yPlacement=" + yPlacement + ", pageOnForm=" + pageOnForm
-				+ ", responseText=" + responseText + ", submissionIdentifier=" + submissionIdentifier + "]";
+				+ ", responseText=" + responseText + ", submissionIdentifier=" + submissionIdentifier 
+				+ ", validationRule=" + validationRule + "]";
 	}
 
 }

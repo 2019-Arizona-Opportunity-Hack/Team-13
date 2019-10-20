@@ -79,7 +79,7 @@ class Application extends Component {
         <div className="card card-body bg-light mb-3">
           <div className="row">
             <div className="col-2">
-              <span className="mx-auto">REACT</span>
+              <span className="mx-auto"></span>
             </div>
             <div className="col-lg-6 col-md-4 col-8">
               <h3>USCIS Form I-90</h3>
@@ -87,13 +87,21 @@ class Application extends Component {
             </div>
             <div className="col-md-4 d-none d-lg-block">
               <ul className="list-group">
-                <button onClick={this.downloadFileWithResponses}>
+                {/*Temporary comment out*/}
+                {/* <button onClick={this.downloadFileWithResponses}>
                   <li className="list-group-item board">
                     <i className="fa fa-flag-checkered pr-1">
                       Print Application
                     </i>
                   </li>
-                </button>
+                </button> */}
+                <Link to="" onClick={this.downloadFileWithResponses}>
+                  <li className="list-group-item board">
+                    <i className="fa fa-flag-checkered pr-1">
+                      Print Application
+                    </i>
+                  </li>
+                </Link>
                 <Link to="#">
                   <li className="list-group-item update">
                     <i className="fa fa-edit pr-1">View Questions</i>
