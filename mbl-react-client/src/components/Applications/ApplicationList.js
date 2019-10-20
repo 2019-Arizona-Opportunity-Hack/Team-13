@@ -14,7 +14,7 @@ class ApplicationList extends Component {
         <div className="card card-body bg-light mb-3">
           <div className="row">
             <div className="col-2">
-              <span className="mx-auto">REACT</span>
+              <span className="mx-auto"></span>
             </div>
             <div className="col-lg-6 col-md-4 col-8">
               <h3>USCIS Form I-90</h3>

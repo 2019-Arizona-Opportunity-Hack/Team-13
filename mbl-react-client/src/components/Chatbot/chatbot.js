@@ -5,6 +5,7 @@ export default class Chatbot extends Component {
     return (
       <div>
         <iframe
+          title="chatbot"
           className="m-3 float-right"
           allow="microphone;"
           width="200"
