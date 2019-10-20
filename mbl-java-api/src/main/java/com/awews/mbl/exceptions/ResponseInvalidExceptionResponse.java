@@ -9,12 +9,12 @@ public class ResponseInvalidExceptionResponse {
 		this.responseInvalid = responseInvalid;
 	}
 
-	public String getResponseNotFound() {
+	public String getResponseInvalid() {
 		return responseInvalid;
 	}
 
-	public void setResponseInvalid(String responseNotFound) {
-		responseInvalid = responseNotFound;
+	public void setResponseInvalid(String responseInvalid) {
+		this.responseInvalid = responseInvalid;
 	}
 
 }
