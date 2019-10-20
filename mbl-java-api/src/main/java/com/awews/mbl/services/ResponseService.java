@@ -75,8 +75,6 @@ public class ResponseService {
 		try {
 			Response response = responseRepository.getById(responseId);
 			
-			
-			
 			if(response != null && (!response.getUser().getUsername().equals(username))) {
 				throw new ResponseNotFoundException("Response not found in your account");
 			} else if (response == null) {

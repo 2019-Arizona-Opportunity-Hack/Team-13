@@ -17,7 +17,7 @@ class Question extends Component {
       question: {
         id: question.id,
         questionText: question.questionText,
-        spanishText: question.spanishText,
+        translationText: question.translationText,
         questionInfo: question.questionInfo,
         xPlacement: question.xPlacement,
         yPlacement: question.yPlacement,
@@ -32,7 +32,7 @@ class Question extends Component {
         applicationIdentifier: "20-I-90",
         questionSequence: question.questionSequence,
         usFormNumber: question.usFormNumber,
-        spanishText: question.spanishText,
+        translationText: question.translationText,
         responseText: "",
         submissionIdentifier: "submissionIdentifier"
       },
@@ -63,7 +63,7 @@ class Question extends Component {
       applicationIdentifier: this.state.response.applicationIdentifier,
       questionSequence: this.state.response.questionSequence,
       usFormNumber: this.state.response.usFormNumber,
-      spanishText: this.state.spanishText,
+      translationText: this.state.translationText,
       responseText: this.state.responseText,
       submissionIdentifier: this.state.response.submissionIdentifier,
       xPlacement: this.state.question.xPlacement,
@@ -95,7 +95,7 @@ class Question extends Component {
                   {this.state.question.questionSequence}
                 </Link>
                 <br />
-                {this.state.question.spanishText}
+                {this.state.question.translationText}
               </h5>
               <hr />
               <form onSubmit={this.onSubmit}>

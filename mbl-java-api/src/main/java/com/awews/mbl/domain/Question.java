@@ -1,7 +1,14 @@
+//Changed "spanishText" to "translationText" to allow translations from other languages
 package com.awews.mbl.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,11 +36,11 @@ public class Question {
 	
 	private String special;
 	
-	private String spanishText;
-	
-	private String questionType;
+	private String translationText;
 	
 	private String responseText;
+
+	private String questionType;
 	
 //	@NotBlank(message = "Question Sequence Part is required")
 	@Column(updatable = false, unique = true)
@@ -52,6 +59,26 @@ public class Question {
 	public Question() {
 		
 	}
+
+// Adding different kinds of questions into consideration
+
+	/**
+	 * Constructor
+	 * Initializing different kind of questions
+	 * @param type The type of the question (multiple selections, radio, text)
+	 */
+	public Question(String type) {
+		questionType = type;
+	}
+
+	public String getType() {
+		return questionType;
+	}
+
+	public void setType(String type) {
+		questionType = type;
+	}
+// End of additional codes
 
 	public Long getId() {
 		return id;
@@ -157,12 +184,12 @@ public class Question {
 		this.special = special;
 	}
 
-	public String getSpanishText() {
-		return spanishText;
+	public String gettranslationText() {
+		return translationText;
 	}
 
-	public void setSpanishText(String spanishText) {
-		this.spanishText = spanishText;
+	public void settranslationText(String translationText) {
+		this.translationText = translationText;
 	}
 
 	public String getQuestionType() {
@@ -186,7 +213,7 @@ public class Question {
 		return "Question [id=" + id + ", questionText=" + questionText + ", questionInfo=" + questionInfo
 				+ ", xPlacement=" + xPlacement + ", yPlacement=" + yPlacement + ", pageOnForm=" + pageOnForm
 				+ ", partOfForm=" + partOfForm + ", questionNumber=" + questionNumber + ", questionNumberPart="
-				+ questionNumberPart + ", special=" + special + ", spanishText=" + spanishText + ", questionType="
+				+ questionNumberPart + ", special=" + special + ", translationText=" + translationText + ", questionType="
 				+ questionType + ", responseText=" + responseText + ", questionSequence=" + questionSequence
 				+ ", questionList=" + questionList + ", usFormNumber=" + usFormNumber + "]";
 	}

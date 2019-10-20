@@ -1,3 +1,5 @@
+//Changed "spanishText" to "translationText" to make the code more flexible for other languages
+
 package com.awews.mbl.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,7 +26,7 @@ public class Response {
 //	must be unique: userId-usFormNumber-questionNumberPart-questionNumber
 	private String userFormQuestionResponse;
 	
-	private String spanishText;
+	private String translationText;
 	
 //	@Value
 	@Column(columnDefinition = "bool default false")
@@ -128,12 +130,12 @@ public class Response {
 		this.pageOnForm = pageOnForm;
 	}
 
-	public String getSpanishText() {
-		return spanishText;
+	public String gettranslationText() {
+		return translationText;
 	}
 
-	public void setSpanishText(String spanishText) {
-		this.spanishText = spanishText;
+	public void settranslationText(String translationText) {
+		this.translationText = translationText;
 	}
 
 	public Boolean getConfirmed() {
@@ -156,7 +158,7 @@ public class Response {
 	public String toString() {
 		return "Response [id=" + id + ", user=" + user + ", applicationIdentifier=" + applicationIdentifier
 				+ ", questionSequence=" + questionSequence + ", userFormQuestionResponse=" + userFormQuestionResponse
-				+ ", spanishText=" + spanishText + ", confirmed=" + confirmed + ", usFormNumber=" + usFormNumber
+				+ ", translationText=" + translationText + ", confirmed=" + confirmed + ", usFormNumber=" + usFormNumber
 				+ ", xPlacement=" + xPlacement + ", yPlacement=" + yPlacement + ", pageOnForm=" + pageOnForm
 				+ ", responseText=" + responseText + ", submissionIdentifier=" + submissionIdentifier + "]";
 	}
