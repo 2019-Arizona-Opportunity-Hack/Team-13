@@ -1,6 +1,6 @@
 # mbl-java-api
 
-The purpose of this app is to allow Spanish speaking users to fill out a pdf form document that has questions in English. The app asks the questions in Spanish and puts the responses in the correct spot. Then the user may download the form to submit to the correct government entity.
+The purpose of this app is to allow translation speaking users to fill out a pdf form document that has questions in English. The app asks the questions in translation and puts the responses in the correct spot. Then the user may download the form to submit to the correct government entity.
 
 existing entities:
 
@@ -38,8 +38,8 @@ Question Properties:
   - may be removed in the near future
 - String special
   - any special instructions for this question
-- String spanishText\*
-  - the Spanish translation of the questionText
+- String translationText\*
+  - the translation translation of the questionText
 - String questionType\*
   - describes the type of question
   - used to determine how the UI should handle the question
@@ -91,8 +91,8 @@ Response Properties:
   - used to attach each response to a user form question
   - user is only allowed one response per question
   - userFormQuestionResponse = userId + "-" + usFormNumber + "-" + questionNumberPart + "-" + questionNumber
-- String spanishText
-  - the Spanish translation of the questionText
+- String translationText
+  - the translation translation of the questionText
 - Boolean confirmed
   - used to track if the response is accurate
 - String usFormNumber

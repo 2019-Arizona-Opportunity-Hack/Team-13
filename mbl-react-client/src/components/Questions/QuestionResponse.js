@@ -106,7 +106,7 @@ export class QuestionResponse extends Component {
       applicationIdentifier: "1-I-90",
       questionSequence: this.state.question.questionSequence,
       usFormNumber: this.state.question.usFormNumber,
-      spanishText: this.state.question.spanishText,
+      translationText: this.state.question.translationText,
       responseText: this.state.responseText,
       userFormQuestionResponse,
       // submissionIdentifier: this.state.response.submissionIdentifier,
@@ -377,7 +377,7 @@ export class QuestionResponse extends Component {
               <h5 className="text-center">
                 {question.questionSequence}
                 <br />
-                {question.spanishText}
+                {question.translationText}
               </h5>
               <hr />
               <form onSubmit={this.onSubmit}>
