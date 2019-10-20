@@ -62,32 +62,35 @@ public class ResponseController {
 			 */
 			String inputFormat = "length = " + response.getResponseText().length();
 			String validationRule = response.getValidationRule();
+			String errorMessage = "{\n   \"error\" : {\n\t\"response\" : \"" + response.getResponseText()
+				+ "\"\n\t\"responseId\" : \"" + response.getId() + "\"\n\t\"ruleBroken\" : \"" 
+				+ validationRule + "\"" + "\"\n\t\"responseFormat\" : \"" + inputFormat 
+				+ "\"\n\t\"message\" : \"" + "\"Please answer with the following format: " + validationRule 
+				+ "\"\n   }\n}";
 			if (!(validationRule.equals(null))) {
 				if (question.getQuestionType().equals("multiple choice: radio with text box option")) {
 					if (!(inputFormat.equals(validationRule))) {
 						logger.error("Please make sure that your answer is in the right formatting: "
 						+ validationRule);
-						return new ResponseEntity<>("Please make sure that your answer is in the right formatting: "
-						+ validationRule, HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 					}
 				} else if (question.getQuestionType().equals("multiple choice: checkbox with text box option")) {
 					if (!(inputFormat.equals(validationRule))) {
 						logger.error("Please make sure that your answer is in the right formatting: "
 						+ validationRule);
-						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 					}
 				}  else if (question.getQuestionType().equals("multiple choice: text")) {
 					if (!(inputFormat.equals(validationRule))) {
 						logger.error("Please make sure that your answer is in the right formatting: "
 						+ validationRule);
-						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 					}
 				} else {
 					if (!(inputFormat.equals(validationRule))) {
 						logger.error("Please make sure that your answer is in the right formatting: "
 						+ validationRule);
-						return new ResponseEntity<>("Please make sure that your answer is in the right formatting: "
-						+ validationRule, HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 					}
 				}
 			}
