@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getQuestions } from "./../../actions/questionActions";
+import { getQuestion, getQuestions } from "./../../actions/questionActions";
 import { filterQuestions } from "./../../actions/filterActions";
 import { getResponses } from "./../../actions/responseActions";
 import { createResponse } from "./../../actions/responseActions";
@@ -18,12 +18,16 @@ export class QuestionResponse extends Component {
   constructor(props) {
     super(props);
     // console.log(props);
-    let { filteredQuestions, question, security } = props;
+    let { filteredQuestions, question, questions, responses, security } = props;
 
     this.state = {
       errors: {},
       filteredQuestions,
       question,
+      previousQuestion: {},
+      goBackResponses: [],
+      questions,
+      responses,
       responseText: "",
       security,
       questionChoices: []
@@ -34,8 +38,8 @@ export class QuestionResponse extends Component {
     this.onCheckboxChange = this.onCheckboxChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    let { filteredQuestions, question, security } = nextProps;
+    console.log("nextProps", nextProps);
+    let { filteredQuestions, question, questions, responses, security } = nextProps;
     if (
       question.questionType &&
       (question.questionType.indexOf("radio") > -1 ||
@@ -53,9 +57,17 @@ export class QuestionResponse extends Component {
       errors: {},
       filteredQuestions,
       question,
+      questions,
+      responses,
       responseText: "",
       security
     });
+    if(this.state.goBackResponses.length === 0){
+      this.setState({goBackResponses: responses});
+    }
+    if(!(Object.entries(this.state.previousQuestion).length === 0 && this.state.previousQuestion.constructor === Object)){
+      this.setState({question: this.state.previousQuestion, responseText: this.state.previousQuestion.responseText});
+    }
     if (nextProps.errors) {
       // console.log(nextProps.errors);
     }
@@ -112,6 +124,7 @@ export class QuestionResponse extends Component {
       usFormNumber,
       this.props.history
     );
+    console.log('this.state', this.state)
     this.props.getResponses(this.props.security.user.id, "I-90");
     this.props.filterQuestions(userId, usFormNumber, this.props.history);
     this.props.history.push("/question/questionSequence");
@@ -178,8 +191,36 @@ export class QuestionResponse extends Component {
     }
   }
 
-  back(element) {
-    debugger;
+  goBack() {
+    if (this.props.responses !== undefined && this.props.responses.length > 0){
+      console.log(this.props.responses);
+      var responses = this.props.responses;
+      var questionSequences = responses.map(a => a.questionSequence);
+      var questionSequencesSplitDash = questionSequences.map(a => a.split('-'));
+      var sortedQuestionSequences = questionSequencesSplitDash.sort((x, y) => this.customSort(x, y)).map(a => a.join("-"));
+
+      var previousQuestionResponse = responses.filter(a => {
+        return a.questionSequence === sortedQuestionSequences[sortedQuestionSequences.length - 1];
+      })[0];
+
+      var previousQuestion = this.props.questions.filter(a => {
+        return a.questionSequence === sortedQuestionSequences[sortedQuestionSequences.length - 1];
+      })[0];
+
+      if(previousQuestionResponse !== undefined && previousQuestion !== undefined){
+        previousQuestion.responseText = previousQuestionResponse.responseText;
+
+        this.setState({question: previousQuestion, 
+          previousQuestion,
+          responseText: previousQuestionResponse.responseText});
+        console.log('this.state', this.state);
+        // debugger;
+      }
+    }
+    
+    // this.state.getQuestion()
+    console.log('this.state', this.state)
+    // debugger;
     
   }
 
@@ -349,7 +390,7 @@ export class QuestionResponse extends Component {
                   )}
                 </div>
                 <div className="row">
-                  <button onClick={this.back.bind(this)} className="btn btn-primary btn-block mt-4 col-lg-5">Back</button>
+                  <button onClick={this.goBack.bind(this)} className="btn btn-primary btn-block mt-4 col-lg-5">Back</button>
                   <div className="col-lg-2"></div>
                   <input
                     type="submit"
@@ -384,5 +425,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createResponse, filterQuestions, getQuestions, getResponses }
+  { createResponse, filterQuestions, getQuestion, getQuestions, getResponses }
 )(QuestionResponse);
