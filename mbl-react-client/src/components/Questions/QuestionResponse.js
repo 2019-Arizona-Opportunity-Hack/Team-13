@@ -39,6 +39,7 @@ export class QuestionResponse extends Component {
   componentDidMount() {
     // console.log(this.props);
     // console.log(this.state);
+    
     this.props.filterQuestions(
       this.props.security.user.id,
       "I-90",
@@ -92,6 +93,71 @@ export class QuestionResponse extends Component {
     this.props.history.push("/question/questionSequence");
   }
 
+  // x and y are arrays, formatted like x = [x1, x2], y = [y1, y2]
+  customSort(x, y){
+    return x[0] - y[0] || this.customSortSub(x, y);
+  }
+
+  // x and y are arrays, formatted like x = [x1, x2], y = [y1, y2]
+  customSortSub(x, y){
+    // x[1] will always be a integer?
+    var xInt = parseInt(x[1]);
+    try{
+      var yInt = parseInt(y[1]);
+      // debugger;
+      if (xInt < yInt) {
+        return -1;
+      }
+      if (xInt > yInt) {
+        return 1;
+      }
+
+      // x and y must be equal
+      return 0;
+    }
+    catch(error){
+        var yy = y[1].split(".");
+        // if yy[0] is numeric
+        if(!isNaN(yy[0])){
+          var yyInt = parseInt(y);
+
+          if (xInt < yyInt) {
+            return -1;
+          }
+          if (xInt > yyInt) {
+            return 1;
+          }
+          // x and yy must be equal
+          return 0;
+        }
+    }
+  }
+
+  orderResponse(){
+    if (this.props.responses !== undefined && this.props.responses.length > 0){
+      console.log(this.props.responses);
+      var responses = this.props.responses;
+      var questionSequences = responses.map(a => a.questionSequence);
+      var questionSequencesSplitDash = questionSequences.map(a => a.split('-'));
+      // var test = questionSequencesSplitDash.filter(a => { 
+      //   if(a[0] === "1"){
+      //     return true
+      //   } 
+      //   return false
+      // }).map(a => a).sort((x, y) => this.customSort(x, y));
+
+      var test = questionSequencesSplitDash.sort((x, y) => this.customSort(x, y));
+
+      console.log(test);
+      debugger;
+    }
+  }
+
+  back(element) {
+    debugger;
+    
+  }
+
   render() {
     // console.log(this.props);
     // console.log(this.state);
@@ -100,6 +166,7 @@ export class QuestionResponse extends Component {
 
     return (
       <div className="project">
+        {/* {this.orderResponse()} */}
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -127,10 +194,14 @@ export class QuestionResponse extends Component {
                     </div>
                   )}
                 </div>
-                <input
-                  type="submit"
-                  className="btn btn-primary btn-block mt-4"
-                />
+                <div className="row">
+                  <button onClick={this.back.bind(this)} className="btn btn-primary btn-block mt-4 col-lg-5">Back</button>
+                  <div className="col-lg-2"></div>
+                  <input
+                    type="submit"
+                    className="btn btn-primary btn-block mt-4 col-lg-5"
+                  />
+                </div>
               </form>
             </div>
           </div>
