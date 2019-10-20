@@ -6,6 +6,7 @@ import { getResponses } from "./../../actions/responseActions";
 import { createResponse } from "./../../actions/responseActions";
 import classnames from "classnames";
 import { connect } from "react-redux";
+import ProgressBar from "./ProgressBar";
 
 export class QuestionResponse extends Component {
   constructor(props) {
@@ -93,6 +94,7 @@ export class QuestionResponse extends Component {
     this.props.history.push("/question/questionSequence");
   }
 
+  // I got help from here...https://coderwall.com/p/ebqhca/javascript-sort-by-two-fields
   // x and y are arrays, formatted like x = [x1, x2], y = [y1, y2]
   customSort(x, y){
     return x[0] - y[0] || this.customSortSub(x, y);
@@ -168,6 +170,11 @@ export class QuestionResponse extends Component {
       <div className="project">
         {/* {this.orderResponse()} */}
         <div className="container">
+          <div className="row">
+            <div className="col-md-8 m-auto">
+              <ProgressBar current={this.props.responses.length} total={this.props.questions.length} />
+            </div>
+          </div>
           <div className="row">
             <div className="col-md-8 m-auto">
               <h5 className="display-4 text-center">
