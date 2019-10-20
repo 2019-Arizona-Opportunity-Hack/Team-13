@@ -8,6 +8,10 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import Radio from "../QuestionTypes/Radio";
 import Checkbox from "../QuestionTypes/Checkbox";
+import Text from "../QuestionTypes/Text";
+import Date from "../QuestionTypes/Date";
+import DropDown from "../QuestionTypes/DropDown";
+import Signature from "../QuestionTypes/Signature";
 
 export class QuestionResponse extends Component {
   constructor(props) {
@@ -130,6 +134,15 @@ export class QuestionResponse extends Component {
     this.setState({ questionChoices, responseText });
   }
 
+  onDropDownChange(dropdown) {
+    const questionChoices = this.state.questionChoices;
+    dropdown.selected = true;
+    const responseText = questionChoices
+      .filter(q => q.selected)
+      .map(q => q.value);
+    this.setState({ questionChoices, responseText });
+  }
+
   questionTypes({ errors, question, responseText, questionChoices }) {
     switch (question.questionType) {
       case "check box":
@@ -149,6 +162,26 @@ export class QuestionResponse extends Component {
             />
             <input
               type="text"
+              className={classnames("form-control form-control-lg", {
+                "is-invalid": errors.responseText
+              })}
+              placeholder="Tu respuesta"
+              name="responseText"
+              value={responseText}
+              onChange={this.onChange}
+              required
+            />
+          </div>
+        );
+      case "drop down":
+        return (
+          <div>
+            <DropDown
+              dropdowns={questionChoices}
+              onChange={this.onDropDownChange}
+            />
+            <input
+              type="dropdown"
               className={classnames("form-control form-control-lg", {
                 "is-invalid": errors.responseText
               })}
@@ -181,18 +214,34 @@ export class QuestionResponse extends Component {
         );
       case "text":
         return (
-          <input
-            type="text"
-            className={classnames("form-control form-control-lg", {
-              "is-invalid": errors.responseText
-            })}
-            placeholder="Tu respuesta"
-            name="responseText"
-            value={responseText}
+          <Text
+            isValid={!!errors.responseText}
+            responseText={responseText}
             onChange={this.onChange}
-            required
+          />
+          //   <input
+          //     type="text"
+          //     className={classnames("form-control form-control-lg", {
+          //       "is-invalid": errors.responseText
+          //     })}
+          //     placeholder="Tu respuesta"
+          //     name="responseText"
+          //     value={responseText}
+          //     onChange={this.onChange}
+          //     required
+          //   />
+          // );
+        );
+      case "date/text":
+        return (
+          <Date
+            isValid={!!errors.Date}
+            responseText={Date}
+            onChange={this.onChange}
           />
         );
+      case "signature":
+        return <Signature />;
       default:
         return <span>No idea how to {question.questionType}...</span>;
     }
