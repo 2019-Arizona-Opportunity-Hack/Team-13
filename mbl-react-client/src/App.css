@@ -85,6 +85,10 @@ a {
   color: #482039;
 }
 
+.btn-info:hover {
+  background-color: #946E80;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

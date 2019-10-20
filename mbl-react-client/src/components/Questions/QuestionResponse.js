@@ -36,6 +36,8 @@ export class QuestionResponse extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onRadioChange = this.onRadioChange.bind(this);
     this.onCheckboxChange = this.onCheckboxChange.bind(this);
+    this.onDropDownChange = this.onDropDownChange.bind(this);
+    this.onSignatureChange = this.onSignatureChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     console.log("nextProps", nextProps);
@@ -252,6 +254,10 @@ export class QuestionResponse extends Component {
     this.setState({ questionChoices, responseText });
   }
 
+  onSignatureChange(signature) {
+    this.setState({ responseText: signature });
+  }
+
   questionTypes({ errors, question, responseText, questionChoices }) {
     switch (question.questionType) {
       case "check box":
@@ -350,7 +356,7 @@ export class QuestionResponse extends Component {
           />
         );
       case "signature":
-        return <Signature />;
+        return <Signature onChange={this.onSignatureChange} />;
       default:
         return <span>No idea how to {question.questionType}...</span>;
     }
