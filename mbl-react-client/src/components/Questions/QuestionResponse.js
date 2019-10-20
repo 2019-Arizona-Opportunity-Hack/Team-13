@@ -6,25 +6,40 @@ import { getResponses } from "./../../actions/responseActions";
 import { createResponse } from "./../../actions/responseActions";
 import classnames from "classnames";
 import { connect } from "react-redux";
+import Radio from "../QuestionTypes/Radio";
+import CheckBox from "../QuestionTypes/MultipleChoiceCheckBox";
 
 export class QuestionResponse extends Component {
   constructor(props) {
     super(props);
     // console.log(props);
     let { filteredQuestions, question, security } = props;
+
+    let radios = [];
     this.state = {
       errors: {},
       filteredQuestions,
       question,
       responseText: "",
-      security
+      security,
+      radios: radios
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onRadioChange = this.onRadioChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
     let { filteredQuestions, question, security } = nextProps;
+    if (question.questionType && question.questionType.indexOf("radio") > -1) {
+      const radios = question.spanishText.split(" ").map(s => ({
+        label: s,
+        value: s,
+        groupname: "group-" + question.id,
+        selected: false
+      }));
+      this.setState({ radios });
+    }
     this.setState({
       errors: {},
       filteredQuestions,
@@ -92,11 +107,71 @@ export class QuestionResponse extends Component {
     this.props.history.push("/question/questionSequence");
   }
 
+  onRadioChange(radio) {
+    const radios = this.state.radios;
+    radios.forEach(r => {
+      r.selected = false;
+    });
+    radio.selected = true;
+    this.setState({ radios, responseText: radio.value });
+  }
+
+  onCheckboxChange(checkbox) {
+    const radios = this.state.radios;
+    checkbox.selected = true;
+    this.setState({ radios, responseText: checkbox.value });
+  }
+
+  questionTypes({ errors, question, responseText, radios }) {
+    switch (question.questionType) {
+      case "check box":
+        return (
+          <CheckBox checkboxes={radios} onChange={this.onCheckboxChange} />
+        );
+      case "radio":
+        return <Radio radios={radios} onChange={this.onRadioChange} />;
+      case "radio/text":
+        return (
+          <div>
+            <Radio radios={radios} onChange={this.onRadioChange} />
+            <input
+              type="text"
+              className={classnames("form-control form-control-lg", {
+                "is-invalid": errors.responseText
+              })}
+              placeholder="Tu respuesta"
+              name="responseText"
+              value={responseText}
+              onChange={this.onChange}
+              required
+            />
+          </div>
+        );
+      case "text":
+        return (
+          <input
+            type="text"
+            className={classnames("form-control form-control-lg", {
+              "is-invalid": errors.responseText
+            })}
+            placeholder="Tu respuesta"
+            name="responseText"
+            value={responseText}
+            onChange={this.onChange}
+            required
+          />
+        );
+      default:
+        return <span>No idea how to {question.questionType}...</span>;
+    }
+  }
+
   render() {
     // console.log(this.props);
     // console.log(this.state);
     let { errors, question, responseText } = this.state;
-    // console.log(question);
+    console.log(question);
+    console.log(this.setState.radios);
 
     return (
       <div className="project">
@@ -111,16 +186,7 @@ export class QuestionResponse extends Component {
               <hr />
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                  <input
-                    type="text"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.responseText
-                    })}
-                    placeholder="Tu respuesta"
-                    name="responseText"
-                    value={responseText}
-                    onChange={this.onChange}
-                  />
+                  {this.questionTypes(this.state)}
                   {errors.responseText && (
                     <div className="invalid-feedback">
                       {errors.responseText}
@@ -130,6 +196,7 @@ export class QuestionResponse extends Component {
                 <input
                   type="submit"
                   className="btn btn-primary btn-block mt-4"
+                  disabled={!this.state.responseText}
                 />
               </form>
             </div>

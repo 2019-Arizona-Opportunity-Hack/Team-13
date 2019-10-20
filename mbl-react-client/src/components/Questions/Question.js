@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 class Question extends Component {
   constructor(props) {
     super(props);
-    // console.log(props);
+    console.log(props);
     const { question } = props;
     const { user } = props.security;
     // console.log(question);
@@ -26,7 +26,8 @@ class Question extends Component {
         questionNumber: question.questionNumber,
         questionNumberPart: question.questionNumberPart,
         questionSequence: question.questionSequence,
-        usFormNumber: question.usFormNumber
+        usFormNumber: question.usFormNumber,
+        questionType: question.questionType
       },
       response: {
         applicationIdentifier: "20-I-90",

@@ -48,7 +48,7 @@ class Application extends Component {
       }
     }
     // console.log(userId);
-    fetch(`https://mbl-java-api.herokuapp.com/api/ver0001/my-form`, {
+    fetch(`https://mbl-java-api.herokuapp.com/api/${this.props.formid}`, {
       // fetch(`/my-form`, {
       method: "GET",
       mode: "cors",
