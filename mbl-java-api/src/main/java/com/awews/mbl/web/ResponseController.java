@@ -67,7 +67,7 @@ public class ResponseController {
 				+ validationRule + "\"" + "\"\n\t\"responseFormat\" : \"" + inputFormat 
 				+ "\"\n\t\"message\" : \"" + "\"Please answer with the following format: " + validationRule 
 				+ "\"\n   }\n}";
-			if (!(validationRule.equals(null))) {
+			if (!(validationRule.equals(""))) {
 				if (question.getQuestionType().equals("multiple choice: radio with text box option")) {
 					if (!(inputFormat.equals(validationRule))) {
 						logger.error("Please make sure that your answer is in the right formatting: "
@@ -93,11 +93,8 @@ public class ResponseController {
 						return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 					}
 				}
-			}
-
-			// End of additional code.
-		
-		return new ResponseEntity<Response>(newResponse, HttpStatus.CREATED);
+			} else {return new ResponseEntity<Response>(newResponse, HttpStatus.CREATED);}
+			return new ResponseEntity<Response>(newResponse, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{responseId}")
