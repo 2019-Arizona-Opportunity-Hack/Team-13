@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { filterQuestions } from "../../actions/filterActions";
 import { getQuestions } from "../../actions/questionActions";
 import { getResponses } from "../../actions/responseActions";
+import Date from "../QuestionTypes/Date";
 
 class Dashboard extends Component {
   componentWillReceiveProps(nextProps) {

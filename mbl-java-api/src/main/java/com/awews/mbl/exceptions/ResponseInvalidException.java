@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class ResponseNotFoundException extends RuntimeException {
+public class ResponseInvalidException extends RuntimeException {
 	
-	public ResponseNotFoundException(String message) {
+	public ResponseInvalidException(String message) {
 		super(message);
 	}
 
