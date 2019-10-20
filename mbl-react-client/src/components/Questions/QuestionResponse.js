@@ -7,7 +7,7 @@ import { createResponse } from "./../../actions/responseActions";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import Radio from "../QuestionTypes/Radio";
-import CheckBox from "../QuestionTypes/MultipleChoiceCheckBox";
+import Checkbox from "../QuestionTypes/Checkbox";
 
 export class QuestionResponse extends Component {
   constructor(props) {
@@ -15,30 +15,34 @@ export class QuestionResponse extends Component {
     // console.log(props);
     let { filteredQuestions, question, security } = props;
 
-    let radios = [];
     this.state = {
       errors: {},
       filteredQuestions,
       question,
       responseText: "",
       security,
-      radios: radios
+      questionChoices: []
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onRadioChange = this.onRadioChange.bind(this);
+    this.onCheckboxChange = this.onCheckboxChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
     let { filteredQuestions, question, security } = nextProps;
-    if (question.questionType && question.questionType.indexOf("radio") > -1) {
-      const radios = question.spanishText.split(" ").map(s => ({
+    if (
+      question.questionType &&
+      (question.questionType.indexOf("radio") > -1 ||
+        question.questionType.indexOf("check box") > -1)
+    ) {
+      const questionChoices = question.spanishText.split(" ").map(s => ({
         label: s,
         value: s,
         groupname: "group-" + question.id,
         selected: false
       }));
-      this.setState({ radios });
+      this.setState({ questionChoices });
     }
     this.setState({
       errors: {},
@@ -108,32 +112,60 @@ export class QuestionResponse extends Component {
   }
 
   onRadioChange(radio) {
-    const radios = this.state.radios;
-    radios.forEach(r => {
+    const questionChoices = this.state.questionChoices;
+    questionChoices.forEach(r => {
       r.selected = false;
     });
     radio.selected = true;
-    this.setState({ radios, responseText: radio.value });
+    this.setState({ questionChoices, responseText: radio.value });
   }
 
   onCheckboxChange(checkbox) {
-    const radios = this.state.radios;
+    const questionChoices = this.state.questionChoices;
     checkbox.selected = true;
-    this.setState({ radios, responseText: checkbox.value });
+    const responseText = questionChoices
+      .filter(q => q.selected)
+      .map(q => q.value)
+      .join(",");
+    this.setState({ questionChoices, responseText });
   }
 
-  questionTypes({ errors, question, responseText, radios }) {
+  questionTypes({ errors, question, responseText, questionChoices }) {
     switch (question.questionType) {
       case "check box":
         return (
-          <CheckBox checkboxes={radios} onChange={this.onCheckboxChange} />
+          <Checkbox
+            checkboxes={questionChoices}
+            onChange={this.onCheckboxChange}
+          />
+        );
+
+      case "check box/text":
+        return (
+          <div>
+            <Checkbox
+              checkboxes={questionChoices}
+              onChange={this.onCheckboxChange}
+            />
+            <input
+              type="text"
+              className={classnames("form-control form-control-lg", {
+                "is-invalid": errors.responseText
+              })}
+              placeholder="Tu respuesta"
+              name="responseText"
+              value={responseText}
+              onChange={this.onChange}
+              required
+            />
+          </div>
         );
       case "radio":
-        return <Radio radios={radios} onChange={this.onRadioChange} />;
+        return <Radio radios={questionChoices} onChange={this.onRadioChange} />;
       case "radio/text":
         return (
           <div>
-            <Radio radios={radios} onChange={this.onRadioChange} />
+            <Radio radios={questionChoices} onChange={this.onRadioChange} />
             <input
               type="text"
               className={classnames("form-control form-control-lg", {
@@ -169,9 +201,9 @@ export class QuestionResponse extends Component {
   render() {
     // console.log(this.props);
     // console.log(this.state);
-    let { errors, question, responseText } = this.state;
+    let { errors, question } = this.state;
     console.log(question);
-    console.log(this.setState.radios);
+    console.log(this.setState.questionChoices);
 
     return (
       <div className="project">
