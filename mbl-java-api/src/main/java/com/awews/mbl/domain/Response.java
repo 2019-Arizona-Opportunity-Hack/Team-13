@@ -2,9 +2,16 @@
 
 package com.awews.mbl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Response {
@@ -27,6 +34,8 @@ public class Response {
 	private String userFormQuestionResponse;
 	
 	private String translationText;
+
+	private String validationRule; // To help in inputs validation
 	
 //	@Value
 	@Column(columnDefinition = "bool default false")
@@ -154,13 +163,27 @@ public class Response {
 		this.userFormQuestionResponse = userFormQuestionResponse;
 	}
 
+	/** 
+	 * Additional methods to help in inputs validation
+	 */
+	public String getValidationRule() {
+		return validationRule;
+	}
+
+	public void setValidationRule(String rule) {
+		validationRule = rule;
+	}
+
+	// End of additional methods
+
 	@Override
 	public String toString() {
 		return "Response [id=" + id + ", user=" + user + ", applicationIdentifier=" + applicationIdentifier
 				+ ", questionSequence=" + questionSequence + ", userFormQuestionResponse=" + userFormQuestionResponse
 				+ ", translationText=" + translationText + ", confirmed=" + confirmed + ", usFormNumber=" + usFormNumber
 				+ ", xPlacement=" + xPlacement + ", yPlacement=" + yPlacement + ", pageOnForm=" + pageOnForm
-				+ ", responseText=" + responseText + ", submissionIdentifier=" + submissionIdentifier + "]";
+				+ ", responseText=" + responseText + ", submissionIdentifier=" + submissionIdentifier 
+				+ ", validationRule=" + validationRule + "]";
 	}
 
 }

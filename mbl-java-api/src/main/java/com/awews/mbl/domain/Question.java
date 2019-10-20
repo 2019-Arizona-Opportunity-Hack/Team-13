@@ -41,8 +41,6 @@ public class Question {
 	private String responseText;
 
 	private String questionType;
-
-	private String validationRule; // To help in inputs validation
 	
 //	@NotBlank(message = "Question Sequence Part is required")
 	@Column(updatable = false, unique = true)
@@ -59,7 +57,7 @@ public class Question {
 	private String usFormNumber;
 
 	public Question() {
-		
+
 	}
 
 	public Long getId() {
@@ -189,19 +187,6 @@ public class Question {
 	public void setResponseText(String responseText) {
 		this.responseText = responseText;
 	}
-
-	/** 
-	 * Additional methods to help in inputs validation
-	 */
-	public String getValidationRule() {
-		return validationRule;
-	}
-
-	public void setValidationRule(String rule) {
-		validationRule = rule;
-	}
-
-	// End of additional methods
 
 	@Override
 	public String toString() {

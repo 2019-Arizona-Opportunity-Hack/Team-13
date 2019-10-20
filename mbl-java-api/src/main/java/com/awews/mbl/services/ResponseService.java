@@ -4,13 +4,11 @@ package com.awews.mbl.services;
 
 import java.util.List;
 
-import com.awews.mbl.domain.Question;
 import com.awews.mbl.domain.Response;
 import com.awews.mbl.domain.User;
 import com.awews.mbl.exceptions.ApplicationIdentifierException;
-import com.awews.mbl.exceptions.InputFormatException;
 import com.awews.mbl.exceptions.ResponseInvalidException;
-import com.awews.mbl.repositories.QuestionRepository;
+
 import com.awews.mbl.repositories.ResponseRepository;
 import com.awews.mbl.repositories.UserRepository;
 
@@ -25,9 +23,6 @@ public class ResponseService {
 	
 	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private QuestionRepository questionRepository;
 	
 	public Response createResponse(Response response, String username, String usFormNumber) {
 		
@@ -82,38 +77,6 @@ public class ResponseService {
 		
 		try {
 			Response response = responseRepository.getById(responseId);
-			Question question = questionRepository.findQuestionByQuestionSequence(response.getQuestionSequence());
-			
-			/**
-			 * Additional code for validating response formatting.
-			 */
-			String inputFormat = "length = " + response.getResponseText().length();
-			String validationRule = question.getValidationRule();
-			if (question.getQuestionType().equals("multiple choice: radio") {
-				if (response == null)
-					 throw new ResponseInvalidException("Please select one of the following choices.");
-			} else if (question.getQuestionType().equals("multiple choice: radio with text box option")) {
-				if (response == null)
-					 throw new ResponseInvalidException("Please select one of the following choices.");
-				if (!(validationRule.equals(null)))
-					 if (!(inputFormat.equals(validationRule)));
-						throw new InputFormatException(validationRule);
-			} else if (question.getQuestionType().equals("multiple choice: checkbox with text box option")) {
-				if (response == null)
-					 throw new ResponseInvalidException("Please select at least one of the following choices.");
-				if (!(validationRule.equals(null)))
-					if (!(inputFormat.equals(validationRule)));
-						throw new InputFormatException(validationRule);
-			} else if (question.getQuestionType().equals("multiple choice: checkbox")) {
-				 if (response == null)
-					 throw new ResponseInvalidException("Please select at least one of the following choices.");
-			} else if (question.getQuestionType().equals("multiple choice: text")) {
-				if (!(validationRule.equals(null)))
-					if (!(inputFormat.equals(validationRule)));
-						throw new InputFormatException(validationRule);
-			}
-
-			// End of additional code.
 			
 			if(response != null && (!response.getUser().getUsername().equals(username))) {
 				throw new ResponseInvalidException("Response not found in your account");

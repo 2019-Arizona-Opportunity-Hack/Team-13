@@ -4,16 +4,17 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
+import com.awews.mbl.MblJavaApiApplication;
 import com.awews.mbl.domain.Question;
 import com.awews.mbl.domain.Response;
 import com.awews.mbl.domain.User;
-import com.awews.mbl.exceptions.InputFormatException;
-import com.awews.mbl.exceptions.ResponseInvalidException;
 import com.awews.mbl.repositories.QuestionRepository;
 import com.awews.mbl.services.MapValidationErrorService;
 import com.awews.mbl.services.ResponseService;
 import com.awews.mbl.services.UserService;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,16 +35,18 @@ public class ResponseController {
 
 	@Autowired
 	private QuestionRepository questionRepository;
-	
+
 	@Autowired
 	private ResponseService responseService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
-	
+
+	private static Logger logger = LogManager.getLogger(MblJavaApiApplication.class.getName());
+
 	@PostMapping("")
 	public ResponseEntity<?> createResponse(@Valid @RequestBody Response response,
 										BindingResult result, @PathVariable String usFormNumber, Principal principal){
@@ -54,33 +57,39 @@ public class ResponseController {
 		Response newResponse = responseService.createResponse(response, principal.getName(), usFormNumber);
 		Question question = questionRepository.findQuestionByQuestionSequence(newResponse.getQuestionSequence());
 
-					/**
+			/**
 			 * Additional code for validating response formatting.
 			 */
 			String inputFormat = "length = " + response.getResponseText().length();
-			String validationRule = question.getValidationRule();
-			if (question.getQuestionType().equals("multiple choice: radio") {
-				if (response == null)
-					 throw new ResponseInvalidException("Please select one of the following choices.");
-			} else if (question.getQuestionType().equals("multiple choice: radio with text box option")) {
-				if (response == null)
-					 throw new ResponseInvalidException("Please select one of the following choices.");
-				if (!(validationRule.equals(null)))
-					 if (!(inputFormat.equals(validationRule)));
-						throw new InputFormatException(validationRule);
-			} else if (question.getQuestionType().equals("multiple choice: checkbox with text box option")) {
-				if (response == null)
-					 throw new ResponseInvalidException("Please select at least one of the following choices.");
-				if (!(validationRule.equals(null)))
-					if (!(inputFormat.equals(validationRule)));
-						throw new InputFormatException(validationRule);
-			} else if (question.getQuestionType().equals("multiple choice: checkbox")) {
-				 if (response == null)
-					 throw new ResponseInvalidException("Please select at least one of the following choices.");
-			} else if (question.getQuestionType().equals("multiple choice: text")) {
-				if (!(validationRule.equals(null)))
-					if (!(inputFormat.equals(validationRule)));
-						throw new InputFormatException(validationRule);
+			String validationRule = response.getValidationRule();
+			if (!(validationRule.equals(null))) {
+				if (question.getQuestionType().equals("multiple choice: radio with text box option")) {
+					if (!(inputFormat.equals(validationRule))) {
+						logger.error("Please make sure that your answer is in the right formatting: "
+						+ validationRule);
+						return new ResponseEntity<>("Please make sure that your answer is in the right formatting: "
+						+ validationRule, HttpStatus.BAD_REQUEST);
+					}
+				} else if (question.getQuestionType().equals("multiple choice: checkbox with text box option")) {
+					if (!(inputFormat.equals(validationRule))) {
+						logger.error("Please make sure that your answer is in the right formatting: "
+						+ validationRule);
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				}  else if (question.getQuestionType().equals("multiple choice: text")) {
+					if (!(inputFormat.equals(validationRule))) {
+						logger.error("Please make sure that your answer is in the right formatting: "
+						+ validationRule);
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				} else {
+					if (!(inputFormat.equals(validationRule))) {
+						logger.error("Please make sure that your answer is in the right formatting: "
+						+ validationRule);
+						return new ResponseEntity<>("Please make sure that your answer is in the right formatting: "
+						+ validationRule, HttpStatus.BAD_REQUEST);
+					}
+				}
 			}
 
 			// End of additional code.
