@@ -34,23 +34,22 @@ class Dashboard extends Component {
       <div className="projects">
         <div className="container">
           <div className="row">
-            <div className="col-md-6 ">
-              <h1 className="display-4 text-center">MBL</h1>
+            <div className="col-md-6 m-auto ">
+              <h1 className="intro-logo display-4 text-center">MBL</h1>
               <br />
               <CreateApplicationButton />
               <br />
               <hr />
               <Application />
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <h1 className="display-4 text-center">MBL</h1>
               <br />
               <CreateApplicationButton />
               <br />
               <hr />
               <Application formid="ver0001/my-form" />
-              <Date />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

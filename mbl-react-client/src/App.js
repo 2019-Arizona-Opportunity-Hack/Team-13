@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import "./App.css";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Header from "./components/Layout/Header";
 import Landing from "./components/Layout/Landing";
 import Login from "./components/UserManagement/Login";
 import Register from "./components/UserManagement/Register";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import QuestionResponse from "./components/Questions/QuestionResponse";
 // import Response from "./components/Responses/Response";
@@ -19,10 +19,11 @@ import { logout } from "./actions/securityActions";
 import SecureRoute from "./secureUtils/SecuredRoute";
 import ApplicationStatus from "./components/Applications/ApplicationStatus";
 import USForm from "./components/USForms/USForm";
+import Chatbot from "./components/Chatbot/chatbot";
 // import USForm0001 from "./components/USForms/USForm0001";
 
 const jwtToken = localStorage.jwtToken;
-//app 
+//app
 if (jwtToken) {
   setJWTToken(jwtToken);
   const decoded_jwtToken = jwt_decode(jwtToken);
@@ -67,6 +68,7 @@ class App extends Component {
                 component={QuestionResponse}
               />
             </Switch>
+            <Chatbot />
           </div>
         </Router>
       </Provider>
