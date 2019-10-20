@@ -1,10 +1,10 @@
 package com.awews.mbl.exceptions;
 
-public class ResponseNotFoundExceptionResponse {
+public class ResponseInvalidExceptionResponse {
 	
 	private String ResponseNotFound;
 	
-	public ResponseNotFoundExceptionResponse(String responseNotFound) {
+	public ResponseInvalidExceptionResponse(String responseNotFound) {
 		
 		ResponseNotFound = responseNotFound;
 	}

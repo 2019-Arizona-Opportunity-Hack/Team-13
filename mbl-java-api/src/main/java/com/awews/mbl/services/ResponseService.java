@@ -1,16 +1,21 @@
+// Added validation methods to the original code
+
 package com.awews.mbl.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.awews.mbl.domain.Question;
 import com.awews.mbl.domain.Response;
 import com.awews.mbl.domain.User;
 import com.awews.mbl.exceptions.ApplicationIdentifierException;
-import com.awews.mbl.exceptions.ResponseNotFoundException;
+import com.awews.mbl.exceptions.InputFormatException;
+import com.awews.mbl.exceptions.ResponseInvalidException;
+import com.awews.mbl.repositories.QuestionRepository;
 import com.awews.mbl.repositories.ResponseRepository;
 import com.awews.mbl.repositories.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ResponseService {
@@ -20,6 +25,9 @@ public class ResponseService {
 	
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private QuestionRepository questionRepository;
 	
 	public Response createResponse(Response response, String username, String usFormNumber) {
 		
@@ -74,18 +82,50 @@ public class ResponseService {
 		
 		try {
 			Response response = responseRepository.getById(responseId);
+			Question question = questionRepository.findQuestionByQuestionSequence(response.getQuestionSequence());
+			
+			/**
+			 * Additional code for validating response formatting.
+			 */
+			String inputFormat = "length = " + response.getResponseText().length();
+			String validationRule = question.getValidationRule();
+			if (question.getQuestionType().equals("multiple choice: radio") {
+				if (response == null)
+					 throw new ResponseInvalidException("Please select one of the following choices.");
+			} else if (question.getQuestionType().equals("multiple choice: radio with text box option")) {
+				if (response == null)
+					 throw new ResponseInvalidException("Please select one of the following choices.");
+				if (!(validationRule.equals(null)))
+					 if (!(inputFormat.equals(validationRule)));
+						throw new InputFormatException(validationRule);
+			} else if (question.getQuestionType().equals("multiple choice: checkbox with text box option")) {
+				if (response == null)
+					 throw new ResponseInvalidException("Please select at least one of the following choices.");
+				if (!(validationRule.equals(null)))
+					if (!(inputFormat.equals(validationRule)));
+						throw new InputFormatException(validationRule);
+			} else if (question.getQuestionType().equals("multiple choice: checkbox")) {
+				 if (response == null)
+					 throw new ResponseInvalidException("Please select at least one of the following choices.");
+			} else if (question.getQuestionType().equals("multiple choice: text")) {
+				if (!(validationRule.equals(null)))
+					if (!(inputFormat.equals(validationRule)));
+						throw new InputFormatException(validationRule);
+			}
+
+			// End of additional code.
 			
 			if(response != null && (!response.getUser().getUsername().equals(username))) {
-				throw new ResponseNotFoundException("Response not found in your account");
+				throw new ResponseInvalidException("Response not found in your account");
 			} else if (response == null) {
-				throw new ResponseNotFoundException("Response not found.");
+				throw new ResponseInvalidException("Response not found.");
 			}
 			
 //			System.out.println("ResponseService line 86");
 			
 			return response;
 		} catch (Exception ex) {
-			throw new ResponseNotFoundException("Response with ID: '"+responseId+"' cannot be found");
+			throw new ResponseInvalidException("Response with ID: '"+responseId+"' cannot be found");
 		}
 	}
 	
@@ -104,21 +144,21 @@ public class ResponseService {
 		if(response.getId() != null) {
 			
 			if(!response.getId().equals(responseId)) {
-				throw new ResponseNotFoundException("The response was NOT updated because ID: '"+responseId+"' and the response.id '"+response.getId()+"' do NOT match");
+				throw new ResponseInvalidException("The response was NOT updated because ID: '"+responseId+"' and the response.id '"+response.getId()+"' do NOT match");
 			}
 //			Response existingResponse = responseRepository.getById(responseId);
 			Response existingResponse = findById(usFormNumber, responseId, username);
 			
 //			Response existingResponse = responseRepository.findByQuestionSequence(response.getQuestionSequence());
 			if(existingResponse == null) {
-				throw new ResponseNotFoundException("Response with ID: '"+responseId+"' cannot be updated because it doesn't exist");
+				throw new ResponseInvalidException("Response with ID: '"+responseId+"' cannot be updated because it doesn't exist");
 			}
 			
 			if(!existingResponse.getQuestionSequence().equals(response.getQuestionSequence())) {
-				throw new ResponseNotFoundException("Response with ID: '"+responseId+"' cannot be updated because response doesn't exist on your account");
+				throw new ResponseInvalidException("Response with ID: '"+responseId+"' cannot be updated because response doesn't exist on your account");
 			}
 			if(!existingResponse.getApplicationIdentifier().equals(response.getApplicationIdentifier())) {
-				throw new ResponseNotFoundException("Response with ID: '"+responseId+"' cannot be updated because it doesn't exist on your application");
+				throw new ResponseInvalidException("Response with ID: '"+responseId+"' cannot be updated because it doesn't exist on your application");
 			}
 //			System.out.println("ResponseService line 91");
 //			System.out.println(existingResponse);
@@ -126,7 +166,7 @@ public class ResponseService {
 			existingResponse.setUser(userRepository.findByUsername(username));
 			return responseRepository.save(existingResponse);
 		}
-		throw new ResponseNotFoundException("Response with QuestionSequence: '"+response.getQuestionSequence()+"' cannot be updated because it doesn't exist");
+		throw new ResponseInvalidException("Response with QuestionSequence: '"+response.getQuestionSequence()+"' cannot be updated because it doesn't exist");
 		
 	}
 	
@@ -137,9 +177,9 @@ public class ResponseService {
 //		System.out.println(existingResponse);
 		
 		if(existingResponse != null && (!existingResponse.getUser().getUsername().equals(username))) {
-			throw new ResponseNotFoundException("Response not found in your account");
+			throw new ResponseInvalidException("Response not found in your account");
 		} else if(existingResponse == null) {
-			throw new ResponseNotFoundException("Response with ID: '"+responseId+"' cannot be updated because it doesn't exist");
+			throw new ResponseInvalidException("Response with ID: '"+responseId+"' cannot be updated because it doesn't exist");
 		}
 		
 		responseRepository.delete(existingResponse);
