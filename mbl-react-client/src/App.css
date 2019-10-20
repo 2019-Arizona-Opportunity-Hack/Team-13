@@ -18,8 +18,71 @@
   color: white;
 }
 
+.navbar-brand {
+  background-image: url("images/MBL-square-logo.png");
+  background-size: 40px 40px;
+  width: 40px;
+  height: 40px;
+  text-indent: 100%;
+  color: transparent;
+  background-repeat: no-repeat;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.bg-primary {
+  background-color: #f4ecc7 !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #6f6f5c;
+}
+
+.intro-logo {
+  background-image: url("images/MBL-horiz-logo.png");
+  background-size: 400px 75px;
+  width: 400px;
+  height: 75px;
+  text-indent: 100%;
+  color: transparent;
+  background-repeat: no-repeat;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: auto;
+}
+
+.btn-primary {
+  border-color: #482039;
+  background-color: #482039;
+}
+
+.btn-info {
+  border-color: #482039;
+  background-color: #482039;
+}
+
+.btn.btn-primary[disabled] {
+  background-color: #946e80;
+  border-color: #946e80;
+}
+
+.btn-primary:hover {
+  border-color: #482039;
+  background-color: #482039;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  border-color: #482039;
+  background-color: #482039;
+}
 .App-link {
   color: #61dafb;
+}
+
+a {
+  color: #482039;
 }
 
 @keyframes App-logo-spin {
