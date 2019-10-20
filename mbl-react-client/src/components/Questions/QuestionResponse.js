@@ -258,8 +258,8 @@ export class QuestionResponse extends Component {
       <div className="project">
         <div className="container">
           <div className="row">
-            <div className="col-md-8 m-auto">
-              <h5 className="display-4 text-center">
+            <div className="col-md-6 m-auto">
+              <h5 className="text-center">
                 {question.questionSequence}
                 <br />
                 {question.spanishText}
